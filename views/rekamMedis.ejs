@@ -1,0 +1,128 @@
+<div class="row">
+    <!-- Area Chart -->
+    <div class="col-xl col-lg">
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Tambah Rekam Medis</h6>
+                <!-- Button trigger modal -->
+            </div>
+            <div class="card-body body-kabeh">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fas fa-plus"></i>
+                    Data Rekam Medis
+                </button>
+                <div class="table-responsive mt-5">
+                    <table class="table table-striped" id="dataTable">
+                        <thead>
+                            <tr class="bg-light text-dark text-center">
+                                <th>No Rekam</th>
+                                <th>Nama Pasien</th>
+                                <th>Nama Dokter</th>
+                                <th>Nama Obat</th>
+                                <th>Nama Diagnosa</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each results}}
+                            <tr class="text-center">
+                                <td>{{ no_rekam_medis }}</td>
+                                <td>{{ kode_reg_pasien }}</td>
+                                <td>{{ kode_dokter }}</td>
+                                <td>{{ kode_obat }}</td>
+                                <td>{{ kode_diagnosa }}</td>
+                                <td class="text-center">
+
+                                    <form action="/dataDokter/{{kode_dokter}}?_method=DELETE" method="post">
+                                        <button type="submit" class="btn btn-sm"><img src="/img/delete.png" width="25"
+                                                onclick="alert('Berhasil Dihapus')">
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Rekam medis</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form action="/dataDokter" method="post">
+                    <div class="form-group">
+                        <label for="inputPassword4">Nama Dokter</label>
+                        <input type="text" class="form-control" name="nama_dokter">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">No Praktek</label>
+                            <input type="text" class="form-control" name="no_praktek">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">Jam Praktek</label>
+                            <select class="form-control float-left" name="jam_praktek">
+                                <option value="">-- Pilih Jam --</option>
+                                <option value="08.00 - 14.00">08.00 - 14.00</option>
+                                <option value="09.00 - 15.00">09.00 - 15.00</option>
+                                <option value="14.00 - selesai">14.00 - selesai</option>
+                                <option value="16.00 - selesai">16.00 - selesai</option>
+                                <option value="16.30 - 18.30">16.30 - 18.30</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword4">Keahlian</label>
+                        <select class="form-control float-left" name="spesialis">
+                            <option value="">-- Pilih Keahlian --</option>
+                            <option value="Penyakit Dalam">Penyakit Dalam</option>
+                            <option value="Spesialis Anak">Spesialis Anak</option>
+                            <option value="Gigi dan Mulut">Gigi dan Mulut</option>
+                            <option value="Spesialis THT">Spesialis THT</option>
+                            <option value="Penyakit Kulit dan Kelamin">Penyakit Kulit dan Kelamin</option>
+                            <option value="Spesialis Mata">Spesialis Mata</option>
+                            <option value="Spesialis Gizi">Spesialis Gizi</option>
+                        </select>
+                    </div>
+                    <div class="form-group mt-5">
+                        <label for="alamat">Alamat Dokter</label>
+                        <textarea class="form-control" id="alamat" rows="3" name="alamat_dokter"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">No Telp</label>
+                            <input type="text" class="form-control" name="no_telp">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Jenis Kelamin</label>
+                            <select class="form-control float-left" name="jeniskel">
+                                <option value="">-- Pilih Jenis Kelamin --</option>
+                                <option value="Laki Laki">Laki Laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger btn-lg btn-block" name="tambah"
+                            onclick="alert('Data Dokter berhasil ditambah')">Tambah</button>
+                    </div>
+            </div>
+            </form>
+
+        </div>
+    </div>
+</div>

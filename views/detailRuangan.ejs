@@ -1,0 +1,87 @@
+<%- include('./partials/header.ejs')  -%>
+
+<% result.forEach((result) => {  %>
+<form class="needs-validation" action="/dataRuangan/<%= result.kode_ruang%>?_method=PUT" method="post">
+    <div class="col-md-6 text-center m-auto">
+        <label for="validationTooltip01">Kode Ruang</label>
+        <input type="text" class="form-control form-control-lg text-center bg-primary text-white font-weight-bold mb-5"
+            value="<%= result.kode_ruang %>" disabled="disabled" name="kode_ruang">
+    </div>
+    <div class="container">
+        <div class="form-row mb-4">
+            <div class="col-md-4 mb-3">
+                <label for="validationTooltip02">Nama Ruang</label>
+                <select class="form-control float-left" name="nama_ruang">
+                    <option value="<%= result.nama_ruang %>"><%= result.nama_ruang %></option>
+                    <option value="">------------------------------</option>
+                    <option value="Bougenville">Bougenville</option>
+                    <option value="Gardenia">Gardenia</option>
+                    <option value="Cattleya">Cattleya</option>
+                    <option value="Dandelion">Dandelion</option>
+                    <option value="ICCU">ICCU</option>
+                    <option value="HCU">HCU</option>
+                    <option value="PICU">PICU</option>
+                    <option value="NICU">NICU</option>
+                </select>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="validationTooltipUsername">Kelas</label>
+                <select class="form-control float-left" name="kelas" disabled="disabled">
+                    <option value="<%= result.kelas %>"><%= result.kelas %></option>
+                    <option value="VVIP">VVIP</option>
+                    <option value="VIP">VIP</option>
+                    <option value="Kelas 1">Kelas 1</option>
+                    <option value="Kelas 2">Kelas 2</option>
+                    <option value="Kelas 3">Kelas 3</option>
+                    <option value="ICCU">ICCU</option>
+                    <option value="HCU">HCU</option>
+                    <option value="PICU">PICU</option>
+                    <option value="NICU">NICU</option>
+                </select>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="alamat">Tarif Kamar</label>
+                <select class="form-control" name="tarif_kamar">
+                    <option value="<%= result.tarif_kamar %>">Rp
+                        <%= result.tarif_kamar %></option>
+                    <option value="1300000">kelas VVIP ~ 1300000 /hari</option>
+                    <option value="950000">kelas VIP ~ 950000 /hari</option>
+                    <option value="500000">kelas 1 ~ 500000 /hari</option>
+                    <option value="300000">kelas 2 ~ 300000 /hari</option>
+                    <option value="150000">kelas 3 ~ 150000 /hari</option>
+                    <option value="sesuai pasien">lainnya..</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-2 mb-3">
+                <label for="validationTooltipUsername">Status Kamar</label>
+                <select class="form-control" name="status_kamar">
+                    <option value="<%= result.status_kamar %>"><%= result.status_kamar %></option>
+                    <option value="Digunakan">Digunakan</option>
+                    <option value="Kosong">Kosong</option>
+                </select>
+            </div>
+            <div class="col-md-2 mb-3">
+                <label for="inputCity">No Kamar</label>
+                <select class="form-control float-left" name="no_kamar">
+                    <option value="<%= result.no_kamar %>"><%= result.no_kamar %></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="lainnya..">lainnya..</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row m-auto pt-5">
+            <a href="/dataRuangan" class="btn btn-block btn-dark">Tutup</a>
+            <button class="btn btn-block btn-primary" type="submit">Simpan</button>
+        </div>
+    </div>
+</form>
+<% })  %>
+
+<%- include('./partials/footer.ejs')  -%>

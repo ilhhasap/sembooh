@@ -1,0 +1,47 @@
+<%- include('./partials/header.ejs')  -%>
+
+<% result.forEach((result) => { %>
+<form class="needs-validation" action="/dataObat/<%= result.kode_obat%>?_method=PUT" method="post">
+    <div class="col-md-6 text-center m-auto">
+        <label for="validationTooltip01">Kode Obat</label>
+        <input type="text" class="form-control form-control-lg text-center bg-primary text-white font-weight-bold mb-5"
+            value="<%= result.kode_obat %>" disabled="disabled">
+    </div>
+    <div class="container">
+        <div class="form-row mb-4">
+            <div class="col-md-4 mb-3">
+                <label class="font-weight-bold" for="inputPassword4">Kategori Obat</label>
+                <input type="text" class="form-control" name="kategori_obat" value="<%= result.kategori_obat%>">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="font-weight-bold" for="inputPassword4">Jenis Obat</label>
+                <input type="text" class="form-control" name="jenis_obat" value="<%= result.jenis_obat%>">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="font-weight-bold" for="inputPassword4">Nama Obat</label>
+                <input type="text" class="form-control" name="nama_obat" value="<%= result.nama_obat%>">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-4 mb-3">
+                <label class="font-weight-bold" for="inputPassword4">Tanggal Exp</label>
+                <input type="text" class="form-control" name="tgl_exp" value="<%= result.tgl_exp%>">
+            </div>
+            <div class="col-md-2 mb-3">
+                <label class="font-weight-bold" for="inputPassword4">Jumlah Obat</label>
+                <input type="text" class="form-control" name="jml_obat" value="<%= result.jml_obat%>">
+            </div>
+            <div class="col-md-2 mb-3">
+                <label class="font-weight-bold" for="inputPassword4">Harga Obat</label>
+                <input type="text" class="form-control" name="harga_obat" value="<%= result.harga_obat%>">
+            </div>
+        </div>
+        <div class="form-row m-auto pt-5">
+            <a href="/dataObat" class="btn btn-block btn-dark">Tutup</a>
+            <button class="btn btn-block btn-primary" type="submit" onclick="alert('berhasil edit')">Simpan</button>
+        </div>
+    </div>
+</form>
+<% })  %>
+
+<%- include('./partials/footer.ejs')  -%>

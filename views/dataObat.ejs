@@ -1,0 +1,115 @@
+<%- include('./partials/header.ejs')  -%>
+
+<div class="row">
+    <!-- Area Chart -->
+    <div class="col-xl col-lg">
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Data Obat
+                    <button type="button" class="btn btn-md tambah btn-success" data-toggle="modal"
+                        data-target="#exampleModal">
+                        Tambah Obat
+                    </button>
+                </h6>
+                <!-- Button trigger modal -->
+            </div>
+            <div class="card-body body-kabeh">
+                <div class="table-responsive">
+                    <table class="table table-light table-striped" id="dataTable">
+                        <thead>
+                            <tr class="text-dark text-left">
+                                <th>Kode Obat</th>
+                                <th>Nama Obat</th>
+                                <th>Kategori</th>
+                                <th>Jumlah Obat</th>
+                                <th colspan="2" class="text-center">Aksi</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% result.forEach((result) => {  %>
+                            <tr>
+                                <td><%= result.kode_obat %></td>
+                                <td><%= result.nama_obat %></td>
+                                <td><%= result.kategori_obat %></td>
+                                <td><%= result.jml_obat %></td>
+                                <td class="text-right">
+                                    <a href="/dataObat/detailObat/<%= result.kode_obat %>" class="btn btn-sm">
+                                        <img src="/img/edit.png" width="25">
+                                    </a>
+                                </td>
+                                <td class="text-left">
+                                    <form action="/dataObat/<%= result.kode_obat %>?_method=DELETE" method="post">
+                                        <button type="submit" class="btn btn-sm bg-transparent"><img
+                                                src="/img/delete.png" width="25" onclick="alert('Berhasil Dihapus')">
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% })  %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Obat</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form action="/dataObat" method="post">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-bold" for="inputPassword4">Kategori Obat</label>
+                            <input type="text" class="form-control" name="kategori_obat">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-bold" for="inputPassword4">Jenis Obat</label>
+                            <input type="text" class="form-control" name="jenis_obat">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-bold" for="nama_obat">Nama Obat</label>
+                            <input type="text" class="form-control" name="nama_obat">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-bold" for="inputCity">Tanggal Exp</label>
+                            <input type="text" class="form-control" name="tgl_exp"
+                                placeholder="contoh : 8 Februari 2020">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="font-weight-bold" for="inputCity">Harga Obat</label>
+                            <input type="text" class="form-control" name="harga_obat">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="font-weight-bold" for="inputCity">Jumlah Obat</label>
+                            <input type="text" class="form-control" name="jml_obat">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" name="tambah"
+                            onclick="alert('Obat berhasil ditambah');">Tambah</button>
+                    </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('./partials/footer.ejs')  -%>

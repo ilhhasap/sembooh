@@ -1,0 +1,84 @@
+    <%- include('./partials/header.ejs')  -%>
+
+    <% result.forEach((result) => { %>
+    <form class="needs-validation" action="/dataDokter/<%= result.kode_dokter%>?_method=PUT" method="post">
+        <div class="col-md-6 text-center m-auto">
+            <label for="validationTooltip01">Kode Dokter</label>
+            <input type="text"
+                class="form-control form-control-lg text-center bg-primary text-white font-weight-bold mb-5"
+                value="<%= result.kode_dokter%>" disabled="disabled">
+        </div>
+        <div class="container">
+            <div class="form-row mb-4">
+                <div class="col-md-5 mb-3">
+                    <label for="validationTooltip02">Nama Dokter</label>
+                    <input type="text" class="form-control" value="<%= result.nama_dokter%>" name="nama_dokter"
+                        required="required">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="validationTooltipUsername">Jenis Kelamin</label>
+                    <div class="input-group">
+                        <select class="form-control float-left" name="jeniskel" disabled="disabled">
+                            <option value="<%= result.jeniskel%>"><%= result.jeniskel%></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="inputCity">Spesialis</label>
+                    <select class="form-control float-left" name="spesialis">
+                        <option value="<%= result.spesialis%>"><%= result.spesialis%></option>
+                        <option value="">----------------------------</option>
+                        <option value="Gigi dan Mulut">Gigi dan Mulut</option>
+                        <option value="Spesialis Anak">Spesialis Anak</option>
+                        <option value="Spesialis THT">Spesialis THT</option>
+                        <option value="Penyakit Kulit dan Kelamin">Penyakit Kulit dan Kelamin</option>
+                        <option value="Penyakit Dalam">Penyakit Dalam</option>
+                        <option value="Spesialis Mata">Spesialis Mata</option>
+                        <option value="Spesialis Syaraf">Spesialis Syaraf</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="alamat">Alamat</label>
+                    <textarea class="form-control" id="alamat" rows="3"
+                        name="alamat_dokter"><%= result.alamat_dokter%></textarea>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <label for="validationTooltipUsername">No Telp</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" value="<%= result.no_telp%>" required="required"
+                            name="no_telp">
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="validationTooltipUsername">Jam Praktek</label>
+                    <select class="form-control float-left" name="jam_praktek">
+                        <div class="input-group">
+                            <option value="<%= result.jam_praktek%>"><%= result.jam_praktek%></option>
+                            <option value="08.00 - 14.00">08.00 - 14.00</option>
+                            <option value="09.00 - 15.00">09.00 - 15.00</option>
+                            <option value="14.00 - selesai">14.00 - selesai</option>
+                            <option value="16.00 - selesai">16.00 - selesai</option>
+                            <option value="16.30 - 18.30">16.30 - 18.30</option>
+                        </div>
+                    </select>
+                </div>
+            </div>
+            <div class="row col-md-3">
+                <label for="validationTooltipUsername">No Ijin Praktek</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" value="<%= result.no_praktek%>" required="required"
+                        name="no_praktek">
+                </div>
+            </div>
+            <div class="form-row m-auto pt-5">
+                <a href="/dataDokter" class="btn btn-block btn-dark">Tutup</a>
+                <button class="btn btn-block btn-primary" type="submit"
+                    onclick="alert('data berhasil diupdate')">Simpan</button>
+            </div>
+        </div>
+        <% })  %>
+    </form>
+
+    <%- include('./partials/footer.ejs')  -%>

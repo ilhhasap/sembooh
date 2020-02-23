@@ -1,0 +1,38 @@
+<%- include('./partials/header.ejs') -%>
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <div class="card border-0 shadow-lg my-5">
+            <div class="card-body">
+                <!-- Nested Row within Card Body -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4 font-weight-bold">LOGIN ADMIN</h1>
+                            </div>
+                            <form class="user" action="/login/auth" method="post">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" placeholder="username
+                                        Address..." name="username">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control form-control-user" placeholder="password"
+                                        name="password">
+                                </div>
+                                <hr class="my-4">
+                                <button type="submit" class="btn btn-success btn-user btn-block">
+                                    Login
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<%- include('./partials/footer.ejs')  -%>

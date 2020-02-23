@@ -1,0 +1,138 @@
+<%- include('./partials/header.ejs') -%>
+<div class="row">
+    <!-- Area Chart -->
+    <div class="col-xl col-lg">
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0  font-weight-bold text-primary text-uppercase">Pendaftaran Pasien
+                    <button type="button" class="btn btn-md tambah btn-success" data-toggle="modal"
+                        data-target="#exampleModal">
+                        Tambah Data
+                    </button>
+                </h6>
+                <!-- Button trigger modal -->
+            </div>
+            <div class="card-body body-kabeh">
+                <div class="table-responsive">
+                    <table class="table table-light table-striped" id="dataTable">
+                        <thead>
+                            <tr class="text-dark text-left">
+                                <th>Antrian</th>
+                                <th>Nama</th>
+                                <th>J.Kelamin</th>
+                                <th>Tgl Daftar</th>
+                                <th>Tempat Periksa</th>
+                                <th colspan="2" class="text-center">Aksi</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% result.forEach((result) => { %>
+                            <tr>
+                                <td><%= result.kode_reg_pasien %></td>
+                                <td><%= result.nama_pasien %></td>
+                                <td><%= result.jeniskel %></td>
+                                <td><%= result.tgl_daftar %></td>
+                                <td><%= result.tempat_pemeriksaan %></td>
+                                <td class="text-right">
+                                    <a href="/daftarPasien/detailPasien/<%= result.kode_reg_pasien%>"
+                                        class="btn btn-sm">
+                                        <img src="/img/edit.png" width="25">
+                                    </a>
+                                </td>
+                                <td class="text-left">
+                                    <form action="/daftarPasien/<%= result.kode_reg_pasien%>?_method=DELETE"
+                                        method="post">
+                                        <button type="submit" class="btn btn-sm bg-transparent"><img
+                                                src="/img/delete.png" width="25" onclick="alert('Berhasil Dihapus')">
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Pendaftaran Antrian Pasien</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form action="/daftarPasien" method="post">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">NIK</label>
+                            <input type="text" class="form-control" name="nik">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Nama Pasien</label>
+                            <input type="text" cxlass="form-control" name="nama_pasien">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="alamat">Alamat</label>
+                        <textarea class="form-control" id="alamat" rows="3" name="alamat_pasien"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">No Telp</label>
+                            <input type="text" class="form-control" name="no_telp">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">Jenis Kelamin</label>
+                            <select class="form-control float-left" name="jeniskel">
+                                <option value="Laki laki">Laki laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="nama">Tanggal Daftar</label>
+                            <input type="text" class="form-control" name="tgl_daftar"
+                                placeholder="contoh : 8 Februari 2020 ">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputCity">Usia</label>
+                            <input type="text" class="form-control" name="usia">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="inputCity">Tempat Pemeriksaan</label>
+                            <select class="form-control float-left" name="tempat_pemeriksaan">
+                                <option value="Poli Penyakit Dalam">Poli Penyakit Dalam</option>
+                                <option value="Poli Spesialis Anak">Poli Spesialis Anak</option>
+                                <option value="Poli Gigi dan Mulut">Poli Gigi dan Mulut</option>
+                                <option value="Poli Spesialis THT">Poli Spesialis THT</option>
+                                <option value="Poli Penyakit Kulit dan Kelamin">Poli Penyakit Kulit dan Kelamin</option>
+                                <option value="Poli Spesialis Mata">Poli Spesialis Mata</option>
+                                <option value="Poli Spesialis Syaraf">Poli Spesialis Syaraf</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" name="tambah"
+                            onclick="alert('antrian berhasil ditambah');">Tambah</button>
+                    </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('./partials/footer.ejs') -%>

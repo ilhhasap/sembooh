@@ -1,0 +1,158 @@
+<%- include('./partials/header.ejs') -%>
+<div class="row">
+    <!-- Area Chart -->
+    <div class="col-xl col-lg">
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary text-uppercase">Daftar Ruangan
+                    <button type="button" class="btn btn-md tambah" data-toggle="modal" data-target="#exampleModal">
+                        Tambah Data
+                    </button>
+                </h6>
+            </div>
+            <div class="card-body body-kabeh">
+                <div class="table-responsive">
+                    <table class="table table-striped table-light" id="dataTable">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Kode Ruang</th>
+                                <th>Nama / No Kamar</th>
+                                <th>Kelas</th>
+                                <th>Status Kamar</th>
+                                <th colspan="2">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% result.forEach((result) => { %>
+                            <tr class="">
+                                <td class="text-center">R <%= result.kode_ruang  %></td>
+                                <td class="text-center"><%= result.nama_ruang  %>
+                                    <span class="badge badge-pill badge-danger"><%= result.no_kamar  %></span></td>
+                                <td><%= result.kelas  %></td>
+                                <td><%= result.status_kamar  %></td>
+                                <td class="text-right">
+                                    <form action="/dataRuangan/detailRuangan/<%= result.kode_ruang%>">
+                                        <button type="submit" class="btn btn-sm">
+                                            <img src="/img/edit.png" width="25">
+                                        </button>
+                                    </form>
+                                </td>
+                                <td class="text-left">
+                                    <form action="/dataRuangan/<%= result.kode_ruang%>?_method=DELETE" method="post">
+                                        <button type="submit" class="btn btn-sm bg-transparent"><img
+                                                src="/img/delete.png" width="25" onclick="alert('Berhasil Dihapus')">
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% })  %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Ruangan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form action="/dataRuangan" method="post">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Kode Ruang</label>
+                            <input type="text" class="form-control" name="kode_ruang">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Nama Ruang</label>
+                            <select class="form-control float-left" name="nama_ruang">
+                                <option value="">-- Pilih Nama Ruang --</option>
+                                <option value="Bougenville">Bougenville</option>
+                                <option value="Gardenia">Gardenia</option>
+                                <option value="Cattleya">Cattleya</option>
+                                <option value="Dandelion">Dandelion</option>
+                                <option value="ICCU">ICCU</option>
+                                <option value="HCU">HCU</option>
+                                <option value="PICU">PICU</option>
+                                <option value="NICU">NICU</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Kelas</label>
+                            <select class="form-control float-left" name="kelas">
+                                <option value="">-- Pilih Kelas --</option>
+                                <option value="VVIP">VVIP</option>
+                                <option value="VIP">VIP</option>
+                                <option value="Kelas 1">Kelas 1</option>
+                                <option value="Kelas 2">Kelas 2</option>
+                                <option value="Kelas 3">Kelas 3</option>
+                                <option value="ICCU">ICCU</option>
+                                <option value="HCU">HCU</option>
+                                <option value="PICU">PICU</option>
+                                <option value="NICU">NICU</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">No Kamar</label>
+                            <select class="form-control float-left" name="no_kamar">
+                                <option value="">-- Pilih Nomor --</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="lainnya..">lainnya..</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">Tarif Kamar</label>
+                            <select class="form-control" name="tarif_kamar">
+                                <option value="">-- Pilih tarif --</option>
+                                <option value="1300000">kelas VVIP ~ 1300000 /hari</option>
+                                <option value="950000">kelas VIP ~ 950000 /hari</option>
+                                <option value="500000">kelas 1 ~ 500000 /hari</option>
+                                <option value="300000">kelas 2 ~ 300000 /hari</option>
+                                <option value="150000">kelas 3 ~ 150000 /hari</option>
+                                <option value="sesuai pasien">lainnya..</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">Status Kamar</label>
+                            <select class="form-control" name="status_kamar">
+                                <option value="">-- Pilih Status --</option>
+                                <option value="Digunakan">Digunakan</option>
+                                <option value="Kosong">Kosong</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" name="tambah"
+                            onclick="alert('data berhasil ditambahkan');">Tambah</button>
+                    </div>
+            </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<%- include('./partials/footer.ejs') -%>
