@@ -5,57 +5,49 @@
             action="/daftarPasien/<%= result.kode_reg_pasien%>?_method=PUT"
             method="post">
             <div class="col-md-6 text-center m-auto">
-                <label for="validationTooltip01">Kode Registrasi</label>
+                <label for="validationTooltip01">Kode Diagnosa</label>
                 <input
                     type="text"
                     class="form-control form-control-lg text-center bg-primary text-white font-weight-bold mb-5"
-                    value="<%= result.kode_reg_pasien %>"
+                    value="<%= result.kode_diagnosa %>"
                     disabled="disabled"/>
             </div>
             <div class="container">
                 <div class="form-row mb-4">
                     <div class="col-md-4 mb-3">
-                        <label for="validationTooltip02">NIK</label>
+                        <label for="validationTooltip02">Nama Pasien</label>
+                        <select class="form-control float-left" name="kode_reg_pasien">
+                                    <option value="<%= result.kode_reg_pasien%>"><%= result.nama_pasien %></option>
+                                    </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="validationTooltip02">Tanggal Pemeriksaan</label>
                         <input
-                            type="text"
-                            class="form-control"
-                            value="<%= result.nik%>"
-                            required="required"
-                            name="nik"/>
+                        type="text"
+                        class="form-control"
+                        value="<%= result.tgl_pemeriksaan %>"
+                        required="required"
+                        name="tgl_pemeriksaan"/>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="validationTooltipUsername">Nama Pasien</label>
-                        <div class="input-group">
-                            <input
-                                type="text"
-                                class="form-control"
-                                value="<%= result.nama_pasien %>"
-                                required="required"
-                                name="nama_pasien"/>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="inputCity">Jenis Kelamin</label>
-                        <select class="form-control float-left" name="jeniskel" disabled="disabled">
-                            <option value="<%= result.jeniskel %>"><%= result.jeniskel %></option>
+                        <label for="inputCity">Nama Dokter</label>
+                        <select class="form-control float-left" name="kode_dokter" disabled="disabled">
+                            <option value="<%= result.kode_dokter %>"><%= result.nama_dokter %></option>
                         </select>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
-                        <label for="alamat">Alamat</label>
-                        <textarea class="form-control" id="alamat" rows="3" name="alamat_pasien">
-                            <%= result.alamat_pasien %></textarea >
+                        <label for="alamat">Hasil Pemeriksaan</label>
+                        <textarea class="form-control" id="alamat" rows="3" cols="4" name="hasil_pemeriksaan">
+                            <%= result.hasil_pemeriksaan %></textarea >
                     </div>
                     <div class="col-md-2 mb-3">
-                        <label for="validationTooltipUsername">No Telp</label>
+                        <label for="validationTooltipUsername">Tindakan</label>
                         <div class="input-group">
-                            <input
-                                type="text"
-                                class="form-control"
-                                value="<%= result.no_telp %>"
-                                required="required"
-                                name="no_telp"/>
+                                <select class="form-control float-left" name="kode_dokter">
+                                        <option value="<%= result.kode_tindakan %>"><%= result.nama_tindakan %></option>
+                                    </select>
                         </div>
                     </div>
                     <div class="col-md mb-3">

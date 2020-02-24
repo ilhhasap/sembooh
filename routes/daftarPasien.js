@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mysql = require("mysql");
+const moment = require('moment')
 const conn = mysql.createConnection(
     {host: "localhost", user: "root", password: "", database: "hospital"}
 );
@@ -19,7 +20,7 @@ router.get("/", (req, res) => {
             throw err;
         res.render("daftarPasien", {
             title: "Halaman Home",
-            result,
+            result, moment,
             panjang: result.length
         });
     });

@@ -40,7 +40,7 @@ router.post('/auth', (req, res) => {
     const username = req.body.username
     const password = req.body.password
     if (username && password) {
-        conn.query("SELECT * FROM admin WHERE username = username AND password = password", [username, password], (err, results, fields) => {
+        conn.query("SELECT * FROM admin WHERE username = username AND password = password",  (err, results, fields) => {
             if (results.length > 0) {
                 req.session.loggedin = true
                 req.session.username = username

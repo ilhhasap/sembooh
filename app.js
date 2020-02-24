@@ -6,7 +6,6 @@ const mysql = require('mysql')
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser')
 const myConnection = require('express-myconnection')
-
 const path = require('path')
 
 app.use(methodOverride('_method'))

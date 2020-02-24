@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mysql = require("mysql");
-
+const moment = require('moment')
 const conn = mysql.createConnection(
     {host: "localhost", user: "root", password: "", database: "hospital"}
 )
@@ -13,42 +13,49 @@ conn.connect(err => {
 })
 
 router.get("/", (req, res) => {
-    let join = "SELECT kode_diagnosa, reg_pasien.kode_reg_pasien,reg_pasien.nama_pasien, dokter.kode_dokter, dokter.nama_dokter,0tindakan.kode_tindakan, .tindakan.nama_tindakan, ruangan.kode_ruang, ruangan.nama_ruang FROM diagnosa JOIN reg_pasien ON diagnosa.kode_reg_pasien = reg_pasien.kode_reg_pasien JOIN dokter ON diagnosa.kode_dokter = dokter.kode_dokter JOIN ruangan ON diagnosa.kode_ruang = ruangan.kode_ruang JOIN tindakan ON diagnosa.kode_tindakan = tindakan.kode_tindakan"
-    const pasien = "SELECT * FROM reg_pasien"
-    let query = conn.query(join, (err, join) => {
-        let query = conn.query(pasien, (err, pasien) => {
-            if (err) 
-                throw err
-            res.render("dataDiagnosa", {
-                title: "Halaman Diagnosa",
-                join,
-                pasien
-            })
-        })
-    })
-})
+    let sql = "SELECT kode_diagnosa, reg_pasien.kode_reg_pasien,reg_pasien.nama_pasien, dokter.kode_dokter, dokter.nama_dokter,tindakan.kode_tindakan, tindakan.nama_tindakan, ruangan.kode_ruang,ruangan.nama_ruang FROM diagnosa JOIN reg_pasien ON diagnosa.kode_reg_pasien = reg_pasien.kode_reg_pasien JOIN dokter ON diagnosa.kode_dokter = dokter.kode_dokter JOIN ruangan ON diagnosa.kode_ruang = ruangan.kode_ruang JOIN tindakan ON diagnosa.kode_tindakan = tindakan.kode_tindakan";
+    const pasien = "SELECT * FROM reg_pasien ORDER BY nama_pasien"
+    const dokter = "SELECT * FROM dokter"
+    const tindakan = "SELECT * FROM tindakan ORDER BY nama_tindakan"
+    const ruangan = "SELECT * FROM ruangan"
+    let query = conn.query(sql, (err, join) => {
+        conn.query(pasien, (err, pasien) => {
+            conn.query(dokter, (err, dokter) => {
+                conn.query(tindakan, (err, tindakan) => {
+                    conn.query(ruangan, (err, ruangan) => {
+                        if (err) 
+                            throw err
+                        res.render("dataDiagnosa", {
+                            title: "Halaman Home",
+                            join,
+                            moment: moment,
+                            pasien, dokter, tindakan, ruangan
+                        });
+                    });
+                });
+            });
+        });
+    });
+});
 
 router.post("/", async (req, res) => {
     try {
-        const nik = req.body.nik;
-        const nama_pasien = req.body.nama_pasien;
-        const alamat_pasien = req.body.alamat_pasien;
-        const jeniskel = req.body.jeniskel;
-        const no_telp = req.body.no_telp;
-        const usia = req.body.usia;
-        const tgl_daftar = req.body.tgl_daftar;
-        const tempat_pemeriksaan = req.body.tempat_pemeriksaan;
-        const status_pasien = "belum diperiksa";
+        const tgl_pemeriksaan = req.body.tgl_pemeriksaan;
+        const hasil_pemeriksaan = req.body.hasil_pemeriksaan;
+        const kode_dokter = req.body.kode_dokter;
+        const kode_reg_pasien = req.body.kode_reg_pasien;
+        const kode_tindakan = req.body.kode_tindakan;
+        const status_pemeriksaan = req.body.status_pemeriksaan;
+        const kode_ruang = req.body.kode_ruang;
 
-        let sql = (await "INSERT INTO reg_pasien VALUES ('','") + nik + "','" +
-                nama_pasien + "','" + alamat_pasien + "','" + jeniskel + "','" + no_telp +
-                "','" + usia + "', '" + tgl_daftar + "', '" +
-                tempat_pemeriksaan + "', '" + status_pasien + "')";
+        let sql = (await "INSERT INTO diagnosa VALUES ('','" + tgl_pemeriksaan + "','" +
+                hasil_pemeriksaan + "','" + kode_dokter + "','" + kode_reg_pasien + "','" + kode_tindakan +
+                "','" + status_pemeriksaan + "', '" + kode_ruang + "')")
         const query = conn.query(sql, (err, result) => {
             if (err) 
                 throw err;
             console.log("1 record inserted");
-            res.redirect("/");
+            res.redirect("/dataDiagnosa");
             res.end();
         });
     } catch (error) {
@@ -71,17 +78,17 @@ router.delete("/:id", (req, res) => {
     });
 });
 
-router.get("/detailPasien/:id", (req, res) => {
+router.get("/detailDiagnosa/:id", (req, res) => {
     const id = req.params.id;
-    const sql = `SELECT * FROM reg_pasien WHERE kode_reg_pasien = ${id}`;
+    let sql = `SELECT kode_diagnosa, tgl_pemeriksaan,hasil_pemeriksaan, reg_pasien.kode_reg_pasien,reg_pasien.nama_pasien, dokter.kode_dokter, dokter.nama_dokter,tindakan.kode_tindakan, tindakan.nama_tindakan, ruangan.kode_ruang,ruangan.nama_ruang FROM diagnosa JOIN reg_pasien ON diagnosa.kode_reg_pasien = reg_pasien.kode_reg_pasien JOIN dokter ON diagnosa.kode_dokter = dokter.kode_dokter JOIN ruangan ON diagnosa.kode_ruang = ruangan.kode_ruang JOIN tindakan ON diagnosa.kode_tindakan = tindakan.kode_tindakan WHERE kode_diagnosa = ${id}`;
+    // const sql = `SELECT * FROM diagnosa WHERE kode_diagnosa = ${id}`;
 
     let query = conn.query(sql, (err, result) => {
         if (err) 
             throw err;
-        res.render("detailPasien", {
-            title: "Halaman Detail",
-            result,
-            panjang: result.length
+        res.render("detailDiagnosa", {
+            title: "Detail Diagnosa",
+            result
         });
     });
 });
