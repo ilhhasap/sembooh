@@ -1,12 +1,11 @@
 const express = require('express')
 const app = express()
 const ejs = require('ejs')
-// const exphbs = require('express-handlebars')
 const mysql = require('mysql')
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser')
 const myConnection = require('express-myconnection')
-const path = require('path')
+const path = require('path')    
 
 app.use(methodOverride('_method'))
 
@@ -39,6 +38,8 @@ conn.connect((err) => {
 app.use('/', require('./routes/home.js'))
 app.use('/daftarPasien', require('./routes/daftarPasien.js'))
 app.use('/rekamMedis', require('./routes/rekamMedis.js'))
+app.use('/dataDiagnosa', require('./routes/dataDiagnosa.js'))
+app.use('/dataPerawat', require('./routes/dataPerawat.js'))
 app.use('/dataDiagnosa', require('./routes/dataDiagnosa.js'))
 app.use('/dataDokter', require('./routes/dataDokter.js'))
 app.use('/dataRuangan', require('./routes/dataRuangan.js'))
