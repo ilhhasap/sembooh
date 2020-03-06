@@ -14,7 +14,7 @@ conn.connect(err => {
 });
 
 router.get("/", (req, res) => {
-    let sql = "SELECT * FROM reg_pasien";
+    let sql = "SELECT * FROM reg_pasien WHERE status_pasien = 'belum periksa' ";
     let query = conn.query(sql, (err, result) => {
         if (err) 
             throw err;
@@ -72,13 +72,14 @@ router.delete("/:id", (req, res) => {
 router.get("/detailPasien/:id", (req, res) => {
     const id = req.params.id;
     const sql = `SELECT * FROM reg_pasien WHERE kode_reg_pasien = ${id}`;
+    const statusHeader = "active"
 
     let query = conn.query(sql, (err, result) => {
         if (err) 
             throw err;
         res.render("detailPasien", {
             title: "Halaman Detail",
-            result,
+            result, statusHeader,
             panjang: result.length
         });
     });

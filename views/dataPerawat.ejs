@@ -31,18 +31,18 @@
                             <% result.forEach((result) => { %>
                             <tr>
                                 <td><%= result.kode_perawat %></td>
-                                <td><%= result.nama_pasien %></td>
+                                <td><%= result.nama_perawat %></td>
                                 <td><%= result.jeniskel %></td>
-                                <td><%= result.tgl_daftar %></td>
-                                <td><%= result.tempat_pemeriksaan %></td>
+                                <td><%= result.nama_ruang %></td>
+                                <td><%= result.jam_jaga %></td>
                                 <td class="text-right">
-                                    <a href="/daftarPasien/detailPasien/<%= result.kode_reg_pasien%>"
+                                    <a href="/dataPerawat/detailPerawat/<%= result.kode_perawat%>"
                                         class="btn btn-sm">
                                         <img src="/img/edit.png" width="25">
                                     </a>
                                 </td>
                                 <td class="text-left">
-                                    <form action="/daftarPasien/<%= result.kode_reg_pasien%>?_method=DELETE"
+                                    <form action="/dataPerawat/<%= result.kode_perawat%>?_method=DELETE"
                                         method="post">
                                         <button type="submit" class="btn btn-sm bg-transparent"><img
                                                 src="/img/delete.png" width="25" onclick="alert('Berhasil Dihapus')">
@@ -73,25 +73,11 @@
             </div>
             <div class="modal-body">
 
-                <form action="/daftarPasien" method="post">
+                <form action="/dataPerawat" method="post">
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="inputPassword4">NIK</label>
-                            <input type="text" class="form-control" name="nik">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputPassword4">Nama Pasien</label>
-                            <input type="text" class="form-control" name="nama_pasien">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="alamat">Alamat</label>
-                        <textarea class="form-control" id="alamat" rows="3" name="alamat_pasien"></textarea>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputCity">No Telp</label>
-                            <input type="text" class="form-control" name="no_telp">
+                            <label for="inputPassword4">Nama Perawat</label>
+                            <input type="text" class="form-control" name="nama_perawat">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="inputCity">Jenis Kelamin</label>
@@ -101,34 +87,44 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="alamat">Alamat</label>
+                        <textarea class="form-control" id="alamat" rows="3" name="alamat_perawat"></textarea>
+                    </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="nama">Tanggal Daftar</label>
-                            <input type="text" class="form-control" name="tgl_daftar"
-                                placeholder="contoh ">
+                            <label for="inputCity">Tgl Lahir</label>
+                            <input type="text" class="form-control" name="tgl_lahir">
                         </div>
-                        <div class="form-group col-md-4">
-                            <label for="inputCity">Usia</label>
-                            <input type="text" class="form-control" name="usia">
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">No Telepon</label>
+                            <input type="text" class="form-control" name="no_telp">
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label for="inputCity">Tempat Pemeriksaan</label>
-                            <select class="form-control float-left" name="tempat_pemeriksaan">
-                                <option value="Poli Penyakit Dalam">Poli Penyakit Dalam</option>
-                                <option value="Poli Spesialis Anak">Poli Spesialis Anak</option>
-                                <option value="Poli Gigi dan Mulut">Poli Gigi dan Mulut</option>
-                                <option value="Poli Spesialis THT">Poli Spesialis THT</option>
-                                <option value="Poli Penyakit Kulit dan Kelamin">Poli Penyakit Kulit dan Kelamin</option>
-                                <option value="Poli Spesialis Mata">Poli Spesialis Mata</option>
-                                <option value="Poli Spesialis Syaraf">Poli Spesialis Syaraf</option>
+                        <div class="form-group col-md-6">
+                            <label for="nama">Nama Ruang</label>
+                            <select name="kode_ruang" class="form-control">
+                                <option selected>-- Pilih Satu jenis --</option>
+                                <% ruangan.forEach((ruangan) => {  %>
+                                <option value="<%= ruangan.kode_ruang%>"><%= ruangan.nama_ruang%></option>
+                                <% }) %>
                             </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">Jam Jaga</label>
+                            <select name="jam_jaga" class="form-control">
+                                    <option selected>-- Pilih Jam Jaga --</option>
+                                    <option value="08.00 - 16.00">08.00 - 16.00</option>
+                                    <option value="16.00 - 24.00">16.00 - 24.00</option>
+                                    <option value="10.00 - 18.00">10.00 - 18.00</option>
+                                    <option value="18.00 - 24.00">18.00 - 24.00</option>
+                                </select>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary btn-lg btn-block" name="tambah"
-                            onclick="alert('antrian berhasil ditambah');">Tambah</button>
+                            onclick="alert('perawat berhasil ditambah');">Tambah</button>
                     </div>
             </div>
             </form>

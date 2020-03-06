@@ -10,3 +10,7 @@ $('#dataTable').dataTable({
     selector: 'td:first-child'
     }
     });
+
+$('.active').click(() => {
+    $('.active').css({"color": "hsl(103, 77%, 49%)", "font-weight": "bold", "font-size": "16px !important"})
+})

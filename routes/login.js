@@ -4,7 +4,7 @@ const session = require('express-session')
 const bodyParser = require('body-parser')
 const router = express.Router()
 const app = express()
-
+const moment = require('moment')
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -20,15 +20,15 @@ conn.connect((err) => {
 });
 
 router.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
+    secret: 'sosecret',
+    resave: false,
+    saveUninitialized: false
 }))
+
 router.use(bodyParser.urlencoded({
     extended: true
 }))
 router.use(bodyParser.json())
-
 
 router.get('/', (req, res) => {
     res.render('login', {
@@ -40,13 +40,14 @@ router.post('/auth', (req, res) => {
     const username = req.body.username
     const password = req.body.password
     if (username && password) {
-        conn.query("SELECT * FROM admin WHERE username = username AND password = password",  (err, results, fields) => {
+        conn.query("SELECT * FROM admin WHERE username = ? AND password = ?",[username,password],  (err, results, fields) => {
             if (results.length > 0) {
                 req.session.loggedin = true
                 req.session.username = username
-                res.redirect('/home')
+                console.log(req.session.username + ' telah login tanggal ' +  moment().format('LLLL') )
+                res.redirect('/')
             } else {
-                res.send('username dan password salah!')
+                res.send('username dan password salah! <br> <a href="/login">kembali</a>')
             }
             res.end()
         })
@@ -70,6 +71,8 @@ router.get('/home', (req, res) => {
     }
     res.end()
 })
+
+
 
 
 module.exports = router
