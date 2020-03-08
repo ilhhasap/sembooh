@@ -47,12 +47,12 @@ router.post('/auth', (req, res) => {
                 console.log(req.session.username + ' telah login tanggal ' +  moment().format('LLLL') )
                 res.redirect('/')
             } else {
-                res.send('username dan password salah! <br> <a href="/login">kembali</a>')
+                res.send('username dan password salah! <br> <a class="btn btn-primary" href="/login" role="button">kembali login</a> ')
             }
             res.end()
         })
     } else {
-        res.send('tolong masukan username dan password!')
+        res.send('tolong masukan username dan password!  <br> <a href="/login">kembali login</a>')
         res.end()
     }
 })

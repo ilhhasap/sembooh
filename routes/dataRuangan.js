@@ -20,12 +20,16 @@ router.get('/', (req, res) => {
     let query = conn.query(sql, (err, result) => {
         if (err)
             throw err;
+        if ( !req.session.loggedin && !req.session.username ) {
+            res.redirect('/login') 
+        } else if(req.session.username) {
         res.render('dataRuangan', {
             title: "Data Ruangan",
             result,session:req.session.username,
             panjang: result.length
-        });
-    });
+        })
+    }
+    })
 })
 
 router.post('/', async (req, res) => {

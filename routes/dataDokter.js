@@ -21,11 +21,15 @@ router.get('/', (req, res) => {
     let query = conn.query(sql, (err, results) => {
         if (err)
             throw err;
+        if ( !req.session.loggedin && !req.session.username ) {
+            res.redirect('/login') 
+        } else if(req.session.username) {
         res.render('dataDokter', {
             title: "Data Dokter",
             results,session:req.session.username,
             panjang: results.length
         })
+    }
     })
 })
 

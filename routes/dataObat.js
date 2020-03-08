@@ -21,11 +21,16 @@ router.get('/', (req, res) => {
     let query = conn.query(sql, (err, result) => {
         if (err)
             throw err;
+        if ( !req.session.loggedin && !req.session.username ) {
+            res.redirect('/login') 
+        } else if(req.session.username) {
         res.render('dataObat', {
             title: "Halaman Obat",session:req.session.username,
             result
-        });
-    });
+        })
+    }
+    })
+    
 })
 
 

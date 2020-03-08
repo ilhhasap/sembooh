@@ -23,11 +23,15 @@ router.get("/", (req, res) => {
         const query = conn.query(ruangan, (err, ruangan) => {
             if (err) 
                 throw err;
-            res.render("dataPerawat", {
+            if ( !req.session.loggedin && !req.session.username ) {
+                res.redirect('/login') 
+            } else if(req.session.username) {
+        res.render("dataPerawat", {
                 title: "Halaman Perawat",
                 result,session:req.session.username,
                 ruangan
             })
+        }
         })
     })
 })
