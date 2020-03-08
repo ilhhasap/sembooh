@@ -72,7 +72,12 @@ router.get('/home', (req, res) => {
     res.end()
 })
 
-
+router.get('/logout', (req, res) => {
+req.session.destroy((err) => {
+    console.log('petugas logout tgl ' + moment().format('LLLL') + '\n')
+    res.redirect('/login')
+})
+})
 
 
 module.exports = router

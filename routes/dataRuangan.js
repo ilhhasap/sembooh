@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
             throw err;
         res.render('dataRuangan', {
             title: "Data Ruangan",
-            result,
+            result,session:req.session.username,
             panjang: result.length
         });
     });
@@ -60,7 +60,7 @@ router.get('/detailRuangan/:id', (req, res) => {
             throw err;
         res.render('detailRuangan', {
             title: "Detail Ruangan",
-            result,
+            result,session:req.session.username,
             panjang: result.length
         });
     });

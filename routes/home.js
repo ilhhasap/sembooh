@@ -22,21 +22,16 @@ router.get('/', (req, res) => {
     let query = conn.query(pasien, (err, results) => {
         if (err) 
             throw err;
-        if (req.session.username == "admin") {
+        if ( !req.session.loggedin && !req.session.username ) {
+            res.redirect('/login')
+        } else if(req.session.username){
             res.render('home', {
-                title: "Halaman Home",
+                title: "Home Admin",
                 results,
-                username: req.session.username,
+                session: req.session.username,
                 antrian: results.length
             })
-        } else if(req.session.username == "perawat"){
-            res.render('homePerawat', {
-                title: "Home Perawat",
-                results,
-                username: req.session.username,
-                antrian: results.length
-            })
-        }
+        } 
 
     });
 })

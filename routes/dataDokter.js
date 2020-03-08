@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
             throw err;
         res.render('dataDokter', {
             title: "Data Dokter",
-            results,
+            results,session:req.session.username,
             panjang: results.length
         })
     })
@@ -86,7 +86,7 @@ router.get('/detailDokter/:id', (req, res) => {
             throw err;
         res.render('detailDokter', {
             title: "Detail Dokter",
-            result,
+            result,session:req.session.username,
             panjang: result.length
         });
     });

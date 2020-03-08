@@ -28,7 +28,7 @@ router.get("/", (req, res) => {
                         res.render("dataDiagnosa", {
                             title: "Halaman Home",
                             join,
-                            moment: moment,
+                            moment: moment,session:req.session.username,
                             pasien, dokter, tindakan, ruangan
                         });
                     });
@@ -88,7 +88,7 @@ router.get("/detailDiagnosa/:id", (req, res) => {
             throw err;
         res.render("detailDiagnosa", {
             title: "Detail Diagnosa",
-            result
+            result, session:req.session.username
         });
     });
 });

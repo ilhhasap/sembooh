@@ -15,18 +15,21 @@ conn.connect((err) => {
     console.log('Mysql Connected...');
 });
 
+// ! halaman perawat
 router.get('/', (req, res) => {
     let sql = "SELECT * FROM obat";
     let query = conn.query(sql, (err, result) => {
         if (err)
             throw err;
         res.render('dataObat', {
-            title: "Halaman Obat",
+            title: "Halaman Obat",session:req.session.username,
             result
         });
     });
 })
 
+
+// ! tambah obat
 router.post('/', async (req, res) => {
     try {
         const kode_obat = ''
@@ -52,6 +55,8 @@ router.post('/', async (req, res) => {
     }
 })
 
+
+// ! detail obat
 router.get('/detailObat/:id', (req, res) => {
     const id = req.params.id
     const sql = `SELECT * FROM obat WHERE kode_obat = ${id}`;
@@ -61,11 +66,12 @@ router.get('/detailObat/:id', (req, res) => {
             throw err;
         res.render('detailObat', {
             title: "Detail Obat",
-            result
+            result, session:req.session.username
         });
     });
 });
 
+// ! edit obat
 router.put('/:id', async (req, res) => {
     try {
         const kode_obat = req.params.id

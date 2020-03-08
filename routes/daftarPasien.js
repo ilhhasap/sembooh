@@ -18,11 +18,22 @@ router.get("/", (req, res) => {
     let query = conn.query(sql, (err, result) => {
         if (err) 
             throw err;
+        if(!req.session.username) {
+            res.redirect('/login')
+        } else if(req.session.username == "admin"){
         res.render("daftarPasien", {
             title: "Halaman Home",
-            result, moment,
-            panjang: result.length
-        });
+            result, moment,session:req.session.username,
+            panjang: result.length, noAkses:""
+        }) 
+     } else if(req.session.username == "perawat"){
+        res.render("daftarPasien", {
+            title: "Halaman Home",
+            result, moment,session:req.session.username,
+            noAkses:"disabled"
+        }) 
+    }
+
     });
 });
 
@@ -79,7 +90,7 @@ router.get("/detailPasien/:id", (req, res) => {
             throw err;
         res.render("detailPasien", {
             title: "Halaman Detail",
-            result, statusHeader,
+            result, statusHeader,session:req.session.username,
             panjang: result.length
         });
     });
