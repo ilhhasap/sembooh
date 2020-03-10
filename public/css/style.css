@@ -37,7 +37,7 @@
 
 .nav-item i,
 .nav-item span {
-    transition: .3s;
+    transition: 0.3s;
 }
 
 .nav-item:hover i,
@@ -65,5 +65,9 @@
 }
 
 .body-kabeh {
+    background-color: #d7d3d7;
+}
+
+.login {
     background-color: #d7d3d7;
 }

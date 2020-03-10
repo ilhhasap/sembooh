@@ -13,16 +13,15 @@ conn.connect(err => {
 })
 
 router.get("/", (req, res) => {
-    let sql = "SELECT kode_resep, reg_pasien.kode_reg_pasien,reg_pasien.nama_pasien, dokter.kode_dokter, dokter.nama_dokter, obat.kode_obat, obat.nama_obat FROM resep JOIN obat ON resep.kode_obat = obat.kode_obat JOIN dokter ON resep.kode_dokter = dokter.kode_dokter JOIN reg_pasienpasien ON resep.kode_reg_pasien = reg_pasien.kode_reg_pasien";
+    let sql = "SELECT kode_resep, reg_pasien.kode_reg_pasien,reg_pasien.nama_pasien, dokter.kode_dokter, dokter.nama_dokter, obat.kode_obat, obat.nama_obat FROM resep JOIN obat ON resep.kode_obat = obat.kode_obat JOIN dokter ON resep.kode_dokter = dokter.kode_dokter JOIN reg_pasien ON resep.kode_reg_pasien = reg_pasien.kode_reg_pasien";
     const pasien = "SELECT * FROM reg_pasien ORDER BY nama_pasien"
     const dokter = "SELECT * FROM dokter"
     const ruangan = "SELECT * FROM ruangan"
     let query = conn.query(sql, (err, join) => {
         conn.query(pasien, (err, pasien) => {
             conn.query(dokter, (err, dokter) => {
-                conn.query(tindakan, (err, tindakan) => {
                     conn.query(ruangan, (err, ruangan) => {
-                        if (err) 
+                        if (err)
                             throw err
                         if ( !req.session.loggedin && !req.session.username ) {
                             res.redirect('/login') 
@@ -30,12 +29,11 @@ router.get("/", (req, res) => {
                         res.render("dataResep", {
                             title: "Resep Pasien",
                             join, moment: moment,session:req.session.username,
-                            pasien, dokter, tindakan, ruangan
+                            pasien, dokter, ruangan
                         })
                     }
                     })
                 })
-            })
         })
     })
     

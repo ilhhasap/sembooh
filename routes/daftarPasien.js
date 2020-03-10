@@ -5,6 +5,7 @@ const moment = require('moment')
 const conn = mysql.createConnection(
     {host: "localhost", user: "root", password: "", database: "hospital"}
 );
+const path = require('path')
 
 //connect ke database
 conn.connect(err => {
@@ -20,12 +21,14 @@ router.get("/", (req, res) => {
             throw err;
         if ( !req.session.loggedin && !req.session.username ) {
                 res.redirect('/login') 
-        } else if(req.session.username) {
+        } else if(req.session.username == "admin") {
         res.render("daftarPasien", {
             title: "Halaman Home",
             result, moment,session:req.session.username,
             panjang: result.length
         }) 
+    } else if(req.session.username == "perawat") {
+        res.sendFile(path.join(__dirname, '../views', 'hakAkses.html'))
     }
     });
 });

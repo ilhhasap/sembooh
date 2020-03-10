@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
         if (err)
             throw err;
         res.render('rekamMedis', {
-            title: "Rekam Medis",
+            title: "Rekam Medis",session: req.session.username,
             result
         });
     });

@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const mysql = require('mysql')
+const path = require('path')    
 const conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -23,12 +24,14 @@ router.get('/', (req, res) => {
             throw err;
         if ( !req.session.loggedin && !req.session.username ) {
             res.redirect('/login') 
-        } else if(req.session.username) {
+        } else if(req.session.username == "admin") {
         res.render('dataDokter', {
             title: "Data Dokter",
             results,session:req.session.username,
             panjang: results.length
         })
+    }else if(req.session.username == "perawat") {
+        res.sendFile(path.join(__dirname, '../views', 'hakAkses.html'))
     }
     })
 })

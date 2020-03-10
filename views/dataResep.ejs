@@ -6,7 +6,7 @@
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bolder text-primary text-uppercase">Data Diagnosa
+                    <h6 class="m-0 font-weight-bolder text-primary text-uppercase">Data Resep
                         <button
                             type="button"
                             class="btn btn-md tambah"
@@ -25,8 +25,7 @@
                                     <th>No</th>
                                     <th>Nama Pasien</th>
                                     <th>Dokter</th>
-                                    <th>Tindakan</th>
-                                    <th>Ruangan</th>
+                                    <th>Nama Obat</th>
                                     <th colspan="2" class="text-center">Aksi</th>
                                     <th></th>
                                 </tr>
@@ -35,21 +34,20 @@
                                 <% var i = 1 %>
                                     <% join.forEach((result) => { %>
                                         <tr class="text-left">
-                                            <td><%= i %></td>
                                             <td><%= result.kode_resep %></td>
                                             <td><%= result.nama_pasien %></td>
                                             <td><%= result.nama_dokter %></td>
-                                            <td><%= result.nama_ruang %></td>
+                                            <td><%= result.nama_obat %></td>
                                             <td class="text-right">
                                                 <a
-                                                    href="/dataDiagnosa/detailDiagnosa/<%= result.kode_diagnosa%>"
+                                                    href="/dataDiagnosa/detailDiagnosa/<%= result.kode_resep%>"
                                                     class="btn btn-sm">
                                                     <img src="/img/edit.png" width="25">
                                                 </a>
                                             </td>
                                             <td class="text-left">
                                                 <form
-                                                    action="/dataDokter/<%= result.kode_diagnosa%>?_method=DELETE"
+                                                    action="/dataDokter/<%= result.kode_resep%>?_method=DELETE"
                                                     method="post">
                                                     <button type="submit" class="btn btn-sm bg-transparent"><img src="/img/delete.png" width="25" onclick="alert('Berhasil Dihapus')">
                                                     </button>
@@ -124,9 +122,7 @@
                                                                 <label for="inputCity">Tindakan</label>
                                                                 <select class="form-control float-left" name="kode_tindakan">
                                                                     <option value="" selected="selected">-- Pilih Tindakan --</option>
-                                                                    <% tindakan.forEach((result) => { %>
-                                                                        <option value="<%= result.kode_tindakan%>"><%= result.nama_tindakan%></option>
-                                                                        <% })  %>
+                                                                    
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-group col-md-6">

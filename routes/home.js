@@ -19,21 +19,29 @@ conn.connect((err) => {
 
 router.get('/', (req, res) => {
     const pasien = "SELECT * FROM reg_pasien WHERE status_pasien = 'belum periksa'";
-    let query = conn.query(pasien, (err, results) => {
+    const rekamMedis = "SELECT * FROM rekam_medis"
+    let query = conn.query(pasien, (err, pasien) => {
+        conn.query(rekamMedis, (err, rekamMedis) => {
         if (err) 
             throw err;
         if ( !req.session.loggedin && !req.session.username ) {
             res.redirect('/login')
-        } else if(req.session.username){
+        } else if(req.session.username == "admin"){
             res.render('home', {
                 title: "Home Admin",
-                results,
                 session: req.session.username,
-                antrian: results.length
+                antrian: pasien.length
             })
-        } 
+        } else if(req.session.username == "perawat"){
+            res.render('homePerawat', {
+                title: "Home Perawat",
+                session: req.session.username,
+                antrian: pasien.length, rekamMedis: rekamMedis.length
+            })
+        }
 
-    });
+    })
+})
 })
 
 router.put('/:id', async (req, res) => {

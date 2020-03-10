@@ -25,12 +25,14 @@ router.get("/", (req, res) => {
                 throw err;
             if ( !req.session.loggedin && !req.session.username ) {
                 res.redirect('/login') 
-            } else if(req.session.username) {
+            } else if(req.session.username == "admin") {
         res.render("dataPerawat", {
                 title: "Halaman Perawat",
                 result,session:req.session.username,
                 ruangan
             })
+        } else if(req.session.username == "perawat") {
+            res.send('Anda Tidak diberi akses! <br> <a class="btn btn-primary" href="/" role="button">kembali</a> ')
         }
         })
     })
