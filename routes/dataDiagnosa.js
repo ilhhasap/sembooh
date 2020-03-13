@@ -27,13 +27,15 @@ router.get("/", (req, res) => {
                             throw err
                         if ( !req.session.loggedin && !req.session.username ) {
                             res.redirect('/login') 
-                        } else if(req.session.username) {
+                        } else if(req.session.username == "admin") {
                         res.render("dataDiagnosa", {
                             title: "Halaman Home",
                             join,
                             moment: moment,session:req.session.username,
                             pasien, dokter, tindakan, ruangan
                         })
+                    } else if(req.session.username == "perawat") {
+                        res.sendFile(path.join(__dirname, '../views', 'hakAkses.html'))
                     }
                     })
                 })

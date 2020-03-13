@@ -47,7 +47,7 @@ router.post("/", async (req, res) => {
         const kode_reg_pasien = req.body.kode_reg_pasien;
         const kode_tindakan = req.body.kode_tindakan;
         const status_pemeriksaan = req.body.status_pemeriksaan;
-        const kode_ruang = req.body.kode_ruang;
+        const kode_ruang = req.body.kode_ruang
 
         let sql = (await "INSERT INTO diagnosa VALUES ('','" + tgl_pemeriksaan + "','" +
                 hasil_pemeriksaan + "','" + kode_dokter + "','" + kode_reg_pasien + "','" + kode_tindakan +
@@ -79,17 +79,23 @@ router.delete("/:id", (req, res) => {
     });
 });
 
-router.get("/detailDiagnosa/:id", (req, res) => {
+router.get("/detailResep/:id", (req, res) => {
     const id = req.params.id;
     let sql = `SELECT kode_diagnosa, tgl_pemeriksaan,hasil_pemeriksaan, reg_pasien.kode_reg_pasien,reg_pasien.nama_pasien, dokter.kode_dokter, dokter.nama_dokter,tindakan.kode_tindakan, tindakan.nama_tindakan, ruangan.kode_ruang,ruangan.nama_ruang FROM diagnosa JOIN reg_pasien ON diagnosa.kode_reg_pasien = reg_pasien.kode_reg_pasien JOIN dokter ON diagnosa.kode_dokter = dokter.kode_dokter JOIN ruangan ON diagnosa.kode_ruang = ruangan.kode_ruang JOIN tindakan ON diagnosa.kode_tindakan = tindakan.kode_tindakan WHERE kode_diagnosa = ${id}`;
+    const dokter = "SELECT * FROM dokter"
+    const obat = "SELECT * FROM obat"
     // const sql = `SELECT * FROM diagnosa WHERE kode_diagnosa = ${id}`;
 
     let query = conn.query(sql, (err, result) => {
+        conn.query(dokter, (err, dokter) => {
+            conn.query(obat, (err, obat) => {
         if (err) 
             throw err;
-        res.render("detailDiagnosa", {
-            title: "Detail Diagnosa",
+        res.render("detailResep", {
+            title: "Detail Resep", dokter,obat,
             result, session:req.session.username
+        })
+        })
         });
     });
 });

@@ -18,7 +18,7 @@ conn.connect((err) => {
 
 
 router.get('/', (req, res) => {
-    const pasien = "SELECT * FROM reg_pasien WHERE status_pasien = 'belum periksa'";
+    const pasien = "SELECT * FROM reg_pasien WHERE status_pasien = 'belum diperiksa'";
     const rekamMedis = "SELECT * FROM rekam_medis"
     let query = conn.query(pasien, (err, pasien) => {
         conn.query(rekamMedis, (err, rekamMedis) => {
@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
             res.render('home', {
                 title: "Home Admin",
                 session: req.session.username,
-                antrian: pasien.length
+                antrian: pasien.length, pasien
             })
         } else if(req.session.username == "perawat"){
             res.render('homePerawat', {
@@ -54,7 +54,7 @@ router.put('/:id', async (req, res) => {
             if (err) 
                 throw err;
             console.log("status pasien diupdate")
-            res.redirect("/daftarPasien")
+            res.redirect("/")
             res.end()
         })
     } catch (error) {

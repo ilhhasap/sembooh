@@ -17,7 +17,7 @@
             <div class="h4 mb-0 font-weight-bold text-gray-800"><%= antrian %></div>
           </div>
           <div class="col-auto">
-            <a href="">
+            <a href="/daftarPasien">
               <i class="fas fa-plus-circle fa-2x"></i>
             </a>
           </div>
@@ -121,10 +121,11 @@
       </div>
       <div class="card-body">
         <!-- {{!-- antrian  --}} -->
-        <% results.forEach((result) => { %>
-          <form action="/home/<%= result.kode_reg_pasien %>?_method=PUT" method="post">
+        <% pasien.forEach((result) => { %>
+          <form action="/<%= result.kode_reg_pasien %>?_method=PUT" method="post">
         <!-- <a class="dropdown-item d-flex align-items-center" href=""> -->
-          <button type="submit" style="width:450px; border:none">
+          <input type="hidden" name="kode_reg_pasien" value="<%= result.kode_reg_pasien%>">
+          <button type="submit" style="width:450px; border:none" onclick="alert('<%= result.nama_pasien%>, ' + ' telah diperiksa')">
             <div class="row mb-5">
               <div class="col">
                   <div class="icon-circle bg-success text-light">

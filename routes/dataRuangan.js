@@ -34,14 +34,13 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const kode_ruang = req.body.kode_ruang
         const nama_ruang = req.body.nama_ruang
         const kelas = req.body.kelas
         const no_kamar = req.body.no_kamar
         const tarif_kamar = req.body.tarif_kamar
         const status_kamar = req.body.status_kamar
 
-        let sql = await "INSERT INTO ruangan VALUES ('" + kode_ruang + "', '" + nama_ruang + "', '" + kelas + "', '" + no_kamar + "', '" + tarif_kamar + "', '" + status_kamar + "')";
+        let sql = await "INSERT INTO ruangan VALUES ('', '" + nama_ruang + "', '" + kelas + "', '" + no_kamar + "', '" + tarif_kamar + "', '" + status_kamar + "')";
 
         const query = conn.query(sql, (err, result) => {
             if (err)

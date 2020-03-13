@@ -15,7 +15,7 @@ conn.connect(err => {
 });
 
 router.get("/", (req, res) => {
-    let sql = "SELECT * FROM reg_pasien WHERE status_pasien = 'belum periksa' ";
+    let sql = "SELECT * FROM reg_pasien WHERE status_pasien = 'belum diperiksa' ";
     let query = conn.query(sql, (err, result) => {
         if (err) 
             throw err;

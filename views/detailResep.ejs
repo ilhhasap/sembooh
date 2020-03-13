@@ -1,0 +1,124 @@
+<%- include('./partials/header.ejs') -%>
+    <% result.forEach((result)=> { %>
+        <form
+            class="needs-validation"
+            action="/detailResep/<%= result.resep%>?_method=PUT"
+            method="post">
+            <div class="col-md-6 text-center m-auto">
+                <label for="validationTooltip01">Kode Resep</label>
+                <input
+                    type="text"
+                    class="form-control form-control-lg text-center bg-primary text-white font-weight-bold mb-5"
+                    value="<%= result.kode_resep %>"
+                    disabled="disabled"/>
+            </div>
+            <div class="container">
+                <div class="form-row mb-4">
+                    <div class="col-md-4 mb-3">
+                        <label for="validationTooltip02">Nama Pasien</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            value="<%= result.nama_pasien%>"
+                            required="required"
+                            name="nama_pasien"/>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="validationTooltipUsername">Nama Dokter</label>
+                        <div class="input-group">
+                                <input
+                                type="text"
+                                class="form-control"
+                                value="<%= result.nama_dokter%>"
+                                required="required"
+                                name="nama_dokter"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="inputCity">Obat</label>
+                        <select class="form-control float-left" name="jeniskel" disabled="disabled">
+                            <% obat.forEach((obat) => { %>
+                            <option value="<%= obat.kode_obat %>"><%= obat.nama_obat %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="alamat">Alamat</label>
+                        <textarea class="form-control" id="alamat" rows="3" name="alamat_pasien">
+                            <%= result.alamat_pasien %></textarea >
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label for="validationTooltipUsername">No Telp</label>
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                class="form-control"
+                                value="<%= result.no_telp %>"
+                                required="required"
+                                name="no_telp"/>
+                        </div>
+                    </div>
+                    <div class="col-md mb-3">
+                        <label for="validationTooltipUsername">Usia</label>
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                class="form-control"
+                                value="<%= result.usia %>"
+                                required="required"
+                                name="usia"/>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="validationTooltipUsername">Tanggal Daftar</label>
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                class="form-control"
+                                value="<%= result.tgl_daftar %>"
+                                required="required"
+                                name="tgl_daftar"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <label for="inputCity">Tempat Pemeriksaan</label>
+                        <select class="form-control float-left" name="tempat_pemeriksaan">
+                            <option value="<%= result.tempat_pemeriksaan%>"><%= result.tempat_pemeriksaan%></option>
+                            <option value="">-------------------------</option>
+                            <option value="Poli Penyakit Dalam">Poli Penyakit Dalam</option>
+                            <option value="Poli Spesialis Anak">Poli Spesialis Anak</option>
+                            <option value="Poli Gigi dan Mulut">Poli Gigi dan Mulut</option>
+                            <option value="Poli Spesialis THT">Poli Spesialis THT</option>
+                            <option value="Poli Penyakit Kulit dan Kelamin">Poli Penyakit Kulit dan Kelamin</option >
+                            <option value="Poli Spesialis Mata">Poli Spesialis Mata</option>
+                            <option value="Poli Spesialis Syaraf">Poli Spesialis Syaraf</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="validationTooltipUsername">Status Pasien</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                value="<%= result.status_pasien %>"
+                                required="required"
+                                name="status_pasien" disabled/>
+                    </div>
+                </div>
+                <div class="form-row m-auto pt-5">
+                    <a href="/daftarPasien" class="btn btn-block btn-dark">Tutup</a>
+                    <button
+                        class="btn btn-block btn-primary"
+                        type="submit"
+                        onclick="alert('data berhasil diupdate');">
+                        Simpan
+                    </button>
+                </div>
+            </div>
+            <% }) %>
+            </form>
+
+            <%- include('./partials/footer.ejs') -%>
