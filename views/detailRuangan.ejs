@@ -11,7 +11,7 @@
         <div class="form-row mb-4">
             <div class="col-md-4 mb-3">
                 <label for="validationTooltip02">Nama Ruang</label>
-                <select class="form-control float-left" name="nama_ruang">
+                <select class="form-control float-left" name="nama_ruang" required>
                     <option value="<%= result.nama_ruang %>"><%= result.nama_ruang %></option>
                     <option value="">------------------------------</option>
                     <option value="Bougenville">Bougenville</option>
@@ -41,7 +41,7 @@
             </div>
             <div class="col-md-4 mb-3">
                 <label for="alamat">Tarif Kamar</label>
-                <select class="form-control" name="tarif_kamar">
+                <select class="form-control" name="tarif_kamar" required>
                     <option value="<%= result.tarif_kamar %>">Rp
                         <%= result.tarif_kamar %></option>
                     <option value="1300000">kelas VVIP ~ 1300000 /hari</option>
@@ -56,7 +56,7 @@
         <div class="form-row">
             <div class="col-md-2 mb-3">
                 <label for="validationTooltipUsername">Status Kamar</label>
-                <select class="form-control" name="status_kamar">
+                <select class="form-control" name="status_kamar" required>
                     <option value="<%= result.status_kamar %>"><%= result.status_kamar %></option>
                     <option value="Digunakan">Digunakan</option>
                     <option value="Kosong">Kosong</option>
@@ -64,7 +64,7 @@
             </div>
             <div class="col-md-2 mb-3">
                 <label for="inputCity">No Kamar</label>
-                <select class="form-control float-left" name="no_kamar">
+                <select class="form-control float-left" name="no_kamar" required>
                     <option value="<%= result.no_kamar %>"><%= result.no_kamar %></option>
                     <option value="1">1</option>
                     <option value="2">2</option>
