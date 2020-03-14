@@ -8,34 +8,47 @@
                         
                           <!-- Card Example -->
                           <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card text-warning font-weight-bold h-100 py-2">
-                              <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                  <div class="col mr-2">
-                                    <div class="text-s font-weight-bold mb-1">Antrian Hari Ini</div>
-                                    <div class="h4 mb-0 font-weight-bold text-gray-800"><%= antrian%></div>
+                              <div class="card shadow h-100 py-2">
+                                  <div class="card-body">
+                                      <div class="row no-gutters align-items-center">
+                                          <div class="col mr-2">
+                                              <div
+                                                  class="text-s font-weight-bold text-light text-uppercase mb-1 float-left mt-1"><img src="img/icon/pasien.png" alt="" width="40px"></div>
+                                              <div class="row no-gutters align-items-center">
+                                                  <div class="col-auto">
+                                                      <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2">Antrian
+                                                          <span style="color: #a253db;">Pasien</span></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-auto h2 text-dark font-weight-bold mt-2">
+                                              <%= jumlahPasien%>
+                                          </div>
+                                      </div>
                                   </div>
-                                  <div class="col-auto">
-                                  </div>
-                                </div>
                               </div>
-                            </div>
                           </div>
                         
                           <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
-                              <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                  <div class="col mr-2">
-                                    <div class="text-s font-weight-bold text-danger mb-1 text-uppercase"><a href="/rekamMedis">Rekam Medis</a></div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><%= rekamMedis%></div>
+                              <div class="card shadow h-100 py-2">
+                                  <div class="card-body">
+                                      <div class="row no-gutters align-items-center">
+                                          <div class="col mr-2">
+                                              <div
+                                                  class="text-s font-weight-bold text-light text-uppercase mb-1 float-left mt-1"><img src="img/icon/pasien.png" alt="" width="40px"></div>
+                                              <div class="row no-gutters align-items-center">
+                                                  <div class="col-auto">
+                                                      <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2">Rekam
+                                                          <span style="color: #a253db;">Medis</span></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-auto h2 text-dark font-weight-bold mt-2">
+                                              <%= jumlahRekam%>
+                                          </div>
+                                      </div>
                                   </div>
-                                  <div class="col-auto">
-                                      <i class="fas fa-database fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
                               </div>
-                            </div>
                           </div>
                           <!-- Earnings (Monthly) Card Example -->
                           <div class="col-xl-3 col-md-6 mb-4">

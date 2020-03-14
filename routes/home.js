@@ -19,13 +19,19 @@ conn.connect((err) => {
 
 router.get('/', (req, res) => {
     const pasien = "SELECT * FROM reg_pasien WHERE status_pasien = 'belum diperiksa'";
+    const pasienDiperiksa = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah periksa'";
     const rekamMedis = "SELECT * FROM rekam_medis"
     const ruangan = "SELECT * FROM ruangan"
     const diagnosa = "SELECT * FROM diagnosa"
+    const dokter = "SELECT * FROM dokter"
+    const perawat = "SELECT * FROM perawat"
     let query = conn.query(pasien, (err, pasien) => {
         conn.query(rekamMedis, (err, rekamMedis) => {
         conn.query(ruangan, (err, ruangan) => {
         conn.query(diagnosa, (err, diagnosa) => {
+        conn.query(dokter, (err, dokter) => {
+        conn.query(perawat, (err, perawat) => {
+        conn.query(pasienDiperiksa, (err, pasienDiperiksa) => {
         if (err) 
             throw err;
         if ( !req.session.loggedin && !req.session.username ) {
@@ -33,20 +39,28 @@ router.get('/', (req, res) => {
         } else if(req.session.username == "admin"){
             res.render('home', {
                 title: "Home Admin",
+                jumlahPasien:pasien.length,
                 jumlahRuangan:ruangan.length,
                 jumlahRekam:rekamMedis.length,
                 jumlahDiagnosa:diagnosa.length,
+                jumlahDokter:dokter.length,
+                jumlahPerawat:perawat.length,
+                jumlahPasienDiperiksa:pasienDiperiksa.length,
                 session: req.session.username,
                 antrian: pasien.length, pasien
             })
         } else if(req.session.username == "perawat"){
             res.render('homePerawat', {
                 title: "Home Perawat",
+                jumlahPasien:pasien.length,
                 jumlahRuangan:ruangan.length,
                 session: req.session.username,ruangan,
                 antrian: pasien.length, rekamMedis: rekamMedis.length
             })
         }
+    })
+    })
+    })
     })
     })
     })

@@ -6,17 +6,20 @@
 #wrapper .sidebar {
     color: rgb(51, 49, 49);
     font-weight: bold;
-    background-color: #ffffff;
+    background-color: #eff7f7;
+}
+#wrapper .topbar {
+    background-color: #eff7f7;
 }
 
 .fa-stethoscope {
-    /* color: hsl(103, 77%, 50%); */
     color: #1cc88a;
-    margin-left: 20px;
+    margin-left: -10px;
 }
 
 .sidebar-brand-text {
-    color: rgb(179, 179, 179);
+    color: rgb(141, 141, 141);
+    font-weight: 800;
     font-family: 'Montserrat';
 }
 
