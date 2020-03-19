@@ -46,6 +46,21 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get("/detailRekamMedis/:id", (req, res) => {
+    const id = req.params.id
+    let sql = `SELECT no_rekam_medis, tgl_pemeriksaan,hasil_pemeriksaan, reg_pasien.kode_reg_pasien,reg_pasien.nama_pasien, dokter.kode_dokter, dokter.nama_dokter,tindakan.kode_tindakan, tindakan.nama_tindakan, ruangan.kode_ruang,ruangan.nama_ruang FROM diagnosa JOIN reg_pasien ON diagnosa.kode_reg_pasien = reg_pasien.kode_reg_pasien JOIN dokter ON diagnosa.kode_dokter = dokter.kode_dokter JOIN ruangan ON diagnosa.kode_ruang = ruangan.kode_ruang JOIN tindakan ON diagnosa.kode_tindakan = tindakan.kode_tindakan WHERE kode_diagnosa = ${id}`
+    // const sql = `SELECT * FROM diagnosa WHERE kode_diagnosa = ${id}`;
+
+    let query = conn.query(sql, (err, result) => {
+        if (err) 
+            throw err
+        res.render("detailDiagnosa", {
+            title: "Detail Diagnosa",
+            result, session:req.session.username
+        })
+    })
+})
+
 router.post('/', async (req, res) => {
     try {
         const kode_reg_pasien = req.body.kode_reg_pasien

@@ -72,7 +72,7 @@ router.get('/detailRuangan/:id', (req, res) => {
 // DELETE PASIEN
 router.delete('/:id', (req, res) => {
     const id = req.params.id
-    const sql = `DELETE FROM reg_pasien WHERE kode_reg_pasien = ${id}`;
+    const sql = `DELETE FROM ruangan WHERE kode_ruang = ${id}`;
 
     conn.query(sql, [id], (error, result, field) => {
         if (error) {
@@ -81,7 +81,7 @@ router.delete('/:id', (req, res) => {
             })
         } else {
             console.log('deleted ' + result.affectedRows + ' rows');
-            res.redirect('/');
+            res.redirect('/dataRuangan');
         }
     });
 });

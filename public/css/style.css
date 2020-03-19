@@ -60,10 +60,14 @@
 
 /* utilities */
 .tambah {
-    border-radius: 100px 100px;
     float: right;
     font-weight: bold;
-    background-image: linear-gradient(120deg, #62e793 0%, #8fd3f4 100%);
+    background-image: linear-gradient(120deg, #00cc7f 0%, #00cc7f 100%);
+    color: white;
+}
+.tambah2 {
+    font-weight: bold;
+    background-image: linear-gradient(120deg, #eec230 0%, #efc84a 100%);
     color: white;
 }
 

@@ -54,6 +54,8 @@ router.get('/', (req, res) => {
                 title: "Home Perawat",
                 jumlahPasien:pasien.length,
                 jumlahRuangan:ruangan.length,
+                jumlahRekam:rekamMedis.length,
+                jumlahPerawat:perawat.length,
                 session: req.session.username,ruangan,
                 antrian: pasien.length, rekamMedis: rekamMedis.length
             })
