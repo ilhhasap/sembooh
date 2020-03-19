@@ -48,16 +48,24 @@ router.get('/', (req, res) => {
 
 router.get("/detailRekamMedis/:id", (req, res) => {
     const id = req.params.id
-    let sql = `SELECT no_rekam_medis, tgl_pemeriksaan,hasil_pemeriksaan, reg_pasien.kode_reg_pasien,reg_pasien.nama_pasien, dokter.kode_dokter, dokter.nama_dokter,tindakan.kode_tindakan, tindakan.nama_tindakan, ruangan.kode_ruang,ruangan.nama_ruang FROM diagnosa JOIN reg_pasien ON diagnosa.kode_reg_pasien = reg_pasien.kode_reg_pasien JOIN dokter ON diagnosa.kode_dokter = dokter.kode_dokter JOIN ruangan ON diagnosa.kode_ruang = ruangan.kode_ruang JOIN tindakan ON diagnosa.kode_tindakan = tindakan.kode_tindakan WHERE kode_diagnosa = ${id}`
-    // const sql = `SELECT * FROM diagnosa WHERE kode_diagnosa = ${id}`;
+    let sql = `SELECT no_rekam_medis, tgl_rekam_medis, reg_pasien.kode_reg_pasien, reg_pasien.nama_pasien, dokter.kode_dokter, dokter.nama_dokter, obat.kode_obat, obat.nama_obat, diagnosa.kode_diagnosa, diagnosa.hasil_pemeriksaan FROM rekam_medis JOIN reg_pasien ON rekam_medis.kode_reg_pasien = reg_pasien.kode_reg_pasien JOIN dokter ON rekam_medis.kode_dokter = dokter.kode_dokter JOIN obat ON rekam_medis.kode_obat = obat.kode_obat JOIN diagnosa ON rekam_medis.kode_diagnosa = diagnosa.kode_diagnosa WHERE no_rekam_medis = ${id}`;
+    const dokter = `SELECT * FROM dokter`
+    const obat = `SELECT * FROM obat`
+    const diagnosa = `SELECT * FROM diagnosa`
 
     let query = conn.query(sql, (err, result) => {
+        conn.query(dokter, (err, dokter) => {
+        conn.query(obat, (err, obat) => {
+        conn.query(diagnosa, (err, diagnosa) => {
         if (err) 
             throw err
-        res.render("detailDiagnosa", {
-            title: "Detail Diagnosa",
+        res.render("detailRekamMedis", {
+            title: "Detail Rekam Medis",dokter,obat,diagnosa,
             result, session:req.session.username
         })
+    })
+        })
+    })
     })
 })
 
@@ -97,6 +105,30 @@ router.delete('/:id', (req, res) => {
             res.redirect('/');
         }
     });
+});
+
+router.put("/:id", async (req, res) => {
+    try {
+        const kode_reg_pasien = req.body.kode_reg_pasien;
+        const tgl_rekam_medis = req.body.tgl_rekam_medis;
+        const kode_dokter = req.body.kode_dokter;
+        const kode_obat = req.body.kode_obat;
+        const kode_diagnosa = req.body.kode_diagnosa;
+
+        let sql = (await "UPDATE rekam_medis SET kode_reg_pasien = '") +
+                kode_reg_pasien + "', tgl_rekam_medis = '" + tgl_rekam_medis + "', kode_dokter = '" +
+                kode_dokter + "', kode_obat = '" + kode_obat + "', kode_diagnosa = '" + kode_diagnosa + "'  WHERE no_rekam_medis = '" + req.params.id +
+                "'";
+        const query = conn.query(sql, (err, result) => {
+            if (err) 
+                throw err;
+            console.log("1 record updated");
+            res.redirect("/rekamMedis");
+            res.end();
+        });
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 module.exports = router

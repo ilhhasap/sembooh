@@ -44,7 +44,7 @@ router.post('/auth', (req, res) => {
             if (results.length > 0) {
                 req.session.loggedin = true
                 req.session.username = username
-                console.log(req.session.username + ' telah login tanggal ' +  moment().format('LLLL') )
+                console.log(req.session.username + ' telah login ' +  moment().format('LLLL') )
                 res.redirect('/')
             } else {
                 res.send('username dan password salah! <br> <a class="btn btn-primary" href="/login" role="button">kembali login</a> ')
@@ -74,7 +74,7 @@ router.get('/home', (req, res) => {
 
 router.get('/logout', (req, res) => {
 req.session.destroy((err) => {
-    console.log('petugas logout tgl ' + moment().format('LLLL') + '\n')
+    console.log('petugas telah logout ' + moment().format('LLLL') + '\n')
     res.redirect('/login')
 })
 })
