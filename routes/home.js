@@ -25,6 +25,7 @@ router.get('/', (req, res) => {
     const diagnosa = "SELECT * FROM diagnosa"
     const dokter = "SELECT * FROM dokter"
     const perawat = "SELECT * FROM perawat"
+    const tindakan = "SELECT * FROM tindakan"
     let query = conn.query(pasien, (err, pasien) => {
         conn.query(rekamMedis, (err, rekamMedis) => {
         conn.query(ruangan, (err, ruangan) => {
@@ -32,6 +33,7 @@ router.get('/', (req, res) => {
         conn.query(dokter, (err, dokter) => {
         conn.query(perawat, (err, perawat) => {
         conn.query(pasienDiperiksa, (err, pasienDiperiksa) => {
+        conn.query(tindakan, (err, tindakan) => {
         if (err) 
             throw err;
         if ( !req.session.loggedin && !req.session.username ) {
@@ -43,6 +45,7 @@ router.get('/', (req, res) => {
                 jumlahRuangan:ruangan.length,
                 jumlahRekam:rekamMedis.length,
                 jumlahDiagnosa:diagnosa.length,
+                jumlahTindakan:tindakan.length,
                 jumlahDokter:dokter.length,
                 jumlahPerawat:perawat.length,
                 jumlahPasienDiperiksa:pasienDiperiksa.length,
@@ -52,6 +55,7 @@ router.get('/', (req, res) => {
         } else if(req.session.username == "perawat"){
             res.render('homePerawat', {
                 title: "Home Perawat",
+                perawat,
                 jumlahPasien:pasien.length,
                 jumlahRuangan:ruangan.length,
                 jumlahRekam:rekamMedis.length,
@@ -60,6 +64,7 @@ router.get('/', (req, res) => {
                 antrian: pasien.length, rekamMedis: rekamMedis.length
             })
         }
+    })
     })
     })
     })

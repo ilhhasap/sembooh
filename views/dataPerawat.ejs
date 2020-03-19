@@ -1,18 +1,23 @@
 <%- include('./partials/header.ejs') -%>
 <div class="row">
-    <!-- Area Chart -->
-    <div class="col-xl col-lg">
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0  font-weight-bold text-primary text-uppercase">Data Perawat
-                    <button type="button" class="btn btn-md tambah btn-success" data-toggle="modal"
-                        data-target="#exampleModal">
-                        Tambah Data
-                    </button>
-                </h6>
-                <!-- Button trigger modal -->
-            </div>
+        <!-- Area Chart -->
+        <div class="col-xl col-lg">
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 text-center">
+                    
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2 mt-2">Data
+                                <span style="color: #a253db;">Perawat</span>
+                        </div>
+                    <!-- Button trigger modal -->
+                </div>
+                <button
+                    type="button"
+                    class="btn btn-lg btn-block btn-light tambahPasien mt-2"
+                    data-toggle="modal"
+                    data-target="#exampleModal">
+                    Tambah
+                </button>
             <div class="card-body body-kabeh">
                 <div class="table-responsive">
                     <table class="table table-light table-striped" id="dataTable">

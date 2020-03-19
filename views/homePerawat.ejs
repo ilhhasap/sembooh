@@ -24,7 +24,7 @@
                                   </div>
                               </div>
                           </div>
-                        
+
                           <div class="col-xl-3 col-md-6 mb-4">
                               <div class="card shadow h-100 py-2">
                                   <a href="/rekamMedis">
@@ -96,11 +96,40 @@
                               </div>
                           </div>
 
-
-
-
                         </div>
                         <!-- /.container-fluid -->
+                        <div class="row">
+
+                                <!-- Content Column -->
+                                <div class="col-lg-8 mb-4">
+                    
+                                    <!-- Project Card Example -->
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-warning">Pembagian Perawat</h6>
+                                        </div>
+                                        <% perawat.forEach((perawat) => { %>
+                                        <div class="accordion" id="accordionExample">
+                                                <div class="card">
+                                                  <div class="card-header" id="headingOne">
+                                                    <h2 class="mb-0">
+                                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                        <%= perawat.nama_perawat%>
+                                                      </button>
+                                                    </h2>
+                                                  </div>
+                                              
+                                                  <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                    <div class="card-body">
+                                                      <%= perawat.kode_ruang%>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <% }) %>
+                                    </div>
+                                </div>
+                                </div>
                         
                         <!-- End of Page Wrapper -->
                         
