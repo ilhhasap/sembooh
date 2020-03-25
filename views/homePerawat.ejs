@@ -1,161 +1,183 @@
 <%- include('./partials/header.ejs') -%>
-                        <!-- Content Row -->
-                        <div class="row">
-                        
-                          <!-- Card Example -->
-                          <div class="col-xl-3 col-md-6 mb-4">
-                              <div class="card shadow h-100 py-2">
-                                  <div class="card-body">
-                                      <div class="row no-gutters align-items-center">
-                                          <div class="col mr-2">
-                                              <div
-                                                  class="text-s font-weight-bold text-light text-uppercase mb-1 float-left mt-1"><img src="img/icon/pasien.png" alt="" width="40px"></div>
-                                              <div class="row no-gutters align-items-center">
-                                                  <div class="col-auto">
-                                                      <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2">Antrian
-                                                          <span style="color: #a253db;">Pasien</span></div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="col-auto h2 text-dark font-weight-bold mt-2">
-                                              <%= jumlahPasien%>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
+    <!-- Content Row -->
+    <div class="row">
 
-                          <div class="col-xl-3 col-md-6 mb-4">
-                              <div class="card shadow h-100 py-2">
-                                  <a href="/rekamMedis">
-                                  <div class="card-body">
-                                      <div class="row no-gutters align-items-center">
-                                          <div class="col mr-2">
-                                              <div
-                                                  class="text-s font-weight-bold text-light text-uppercase mb-1 float-left mt-1"><img src="img/icon/rekamMedis.png" alt="" width="40px"></div>
-                                              <div class="row no-gutters align-items-center">
-                                                  <div class="col-auto">
-                                                      <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2">Rekam
-                                                          <span style="color: #00cc7f;">Medis</span></div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="col-auto h2 text-dark font-weight-bold mt-2">
-                                              <%= jumlahRekam%>
-                                          </div>
-                                      </div>
-                                  </div>
-                                </a>
-                              </div>
-                          </div>
-                         
-
-                          <div class="col-xl-3 col-md-6 mb-4">
-                              <div class="card shadow h-100 py-2">
-                                <a href="/dataRuangan">
-                                  <div class="card-body">
-                                      <div class="row no-gutters align-items-center">
-                                          <div class="col mr-2">
-                                              <div
-                                                  class="text-s font-weight-bold text-light text-uppercase mb-1 float-left mt-1"><img src="img/icon/ruangan.png" alt="" width="40px"></div>
-                                              <div class="row no-gutters align-items-center">
-                                                  <div class="col-auto">
-                                                      <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2">Data
-                                                          <span style="color: #efc84a;">Ruangan</span></div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="col-auto h2 text-dark font-weight-bold mt-2">
-                                              <%= jumlahRuangan%>
-                                          </div>
-                                      </div>
-                                  </div>
-                                </a>
-                              </div>
-                          </div>
-
-                          <div class="col-xl-3 col-md-6 mb-4">
-                              <div class="card shadow h-100 py-2">
-                                  <div class="card-body">
-                                      <div class="row no-gutters align-items-center">
-                                          <div class="col mr-2">
-                                              <div
-                                                  class="text-s font-weight-bold text-light text-uppercase mb-1 float-left mt-1"><img src="img/icon/perawat.png" alt="" width="40px"></div>
-                                              <div class="row no-gutters align-items-center">
-                                                  <div class="col-auto">
-                                                      <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2">Jumlah
-                                                          <span style="color: #efc84a;">Perawat</span></div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="col-auto h2 text-dark font-weight-bold mt-2">
-                                              <%= jumlahPerawat%>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-
+        <!-- Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div
+                                class="text-s font-weight-bold text-light text-uppercase mb-1 float-left mt-1"><img src="img/icon/pasien.png" alt="" width="40px"></div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2">Antrian
+                                        <span style="color: #a253db;">Pasien</span></div>
+                                </div>
+                            </div>
                         </div>
-                        <!-- /.container-fluid -->
-                        <div class="row">
+                        <div class="col-auto h2 text-dark font-weight-bold mt-2">
+                            <%= jumlahPasien%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                                <!-- Content Column -->
-                                <div class="col-lg-8 mb-4">
-                    
-                                    <!-- Project Card Example -->
-                                    <div class="card shadow mb-4">
-                                        <div class="card-header py-3">
-                                            <h6 class="m-0 font-weight-bold text-warning">Pembagian Perawat</h6>
-                                        </div>
-                                        <% perawat.forEach((perawat) => { %>
-                                        <div class="accordion" id="accordionExample">
-                                                <div class="card">
-                                                  <div class="card-header" id="headingOne">
-                                                    <h2 class="mb-0">
-                                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        <%= perawat.nama_perawat%>
-                                                      </button>
-                                                    </h2>
-                                                  </div>
-                                              
-                                                  <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                    <div class="card-body">
-                                                      <%= perawat.kode_ruang%>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                              <% }) %>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card shadow h-100 py-2">
+                <a href="/rekamMedis">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div
+                                    class="text-s font-weight-bold text-light text-uppercase mb-1 float-left mt-1"><img src="img/icon/rekamMedis.png" alt="" width="40px"></div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2">Rekam
+                                            <span style="color: #00cc7f;">Medis</span></div>
                                     </div>
                                 </div>
-                                </div>
-                        
-                        <!-- End of Page Wrapper -->
-                        
-                        <!-- Scroll to Top Button-->
-                        <a class="scroll-to-top rounded" href="#page-top">
-                          <i class="fas fa-angle-up"></i>
-                        </a>
-                        
-                        <!-- Logout Modal-->
-                        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                          aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">×</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                              <div class="modal-footer">
-                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                <a class="btn btn-primary" href="login.html">Logout</a>
-                              </div>
                             </div>
-                          </div>
+                            <div class="col-auto h2 text-dark font-weight-bold mt-2">
+                                <%= jumlahRekam%>
+                            </div>
                         </div>
-                        
-                        <%- include('./partials/footer.ejs') -%>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card shadow h-100 py-2">
+                <a href="/dataRuangan">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div
+                                    class="text-s font-weight-bold text-light text-uppercase mb-1 float-left mt-1"><img src="img/icon/ruangan.png" alt="" width="40px"></div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2">Data
+                                            <span style="color: #efc84a;">Ruangan</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto h2 text-dark font-weight-bold mt-2">
+                                <%= jumlahRuangan%>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div
+                                class="text-s font-weight-bold text-light text-uppercase mb-1 float-left mt-1"><img src="img/icon/perawat.png" alt="" width="40px"></div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2">Jumlah
+                                        <span style="color: #efc84a;">Perawat</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto h2 text-dark font-weight-bold mt-2">
+                            <%= jumlahPerawat%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+    <div class="row">
+
+        <!-- Content Column -->
+        <div class="col-lg-8 mb-4">
+
+            <!-- Project Card Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-warning">Pembagian Perawat</h6>
+                </div>
+                <!-- <% perawat.forEach((perawat) => { %> <div class="accordion"
+                id="accordionExample"> <div class="card"> <div class="card-header"
+                id="headingOne"> <h2 class="mb-0"> <button class="btn btn-link" type="button"
+                data-toggle="collapse" data-target="#detail<%= perawat.kode_ruang%>"
+                aria-expanded="true" aria-controls="collapseOne"> <%= perawat.kode_ruang%>
+                </button> </h2> </div> <div id="detail<%= perawat.kode_ruang%>" class="collapse"
+                aria-labelledby="headingOne" data-parent="#accordionExample"> <div
+                class="card-body"> <%= perawat.nama_perawat%> </div> </div> </div> </div> <% })
+                %> -->
+                <!-- Button trigger modal -->
+                <% perawatRuangan.forEach((perawat) => { %>
+                <button
+                    type="button"
+                    class="btn btn-success text-dark font-weight-bold rounded-0 border border-dark mt-1"
+                    data-toggle="modal"
+                    data-target="#detail<%= perawat.kode_ruang%>">
+                    <%= perawat.nama_perawat%>
+                </button>
+
+                <!-- Modal -->
+                <div
+                    class="modal fade"
+                    id="detail<%= perawat.kode_ruang%>"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalCenterTitle"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content bg-success text-dark font-weight-bold">
+                            <div class="modal-body">
+                                Ruang <%= perawat.nama_ruang%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div
+        class="modal fade"
+        id="logoutModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('./partials/footer.ejs') -%>

@@ -1,8 +1,8 @@
 <%- include('./partials/header.ejs') -%>
-    <% result.forEach((result)=> { %>
+    <% result.forEach((result) => { %>
         <form
             class="needs-validation"
-            action="/detailResep/<%= result.resep%>?_method=PUT"
+            action="/detailResep/<%= result.kode_resep%>?_method=PUT"
             method="post">
             <div class="col-md-6 text-center m-auto">
                 <label for="validationTooltip01">Kode Resep</label>
