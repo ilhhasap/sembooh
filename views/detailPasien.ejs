@@ -99,12 +99,11 @@
                     </div>
                     <div class="col-md-3">
                         <label for="validationTooltipUsername">Status Pasien</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                value="<%= result.status_pasien %>"
-                                required="required"
-                                name="status_pasien" disabled/>
+                        <select class="form-control" name="status_pasien" id="">
+                            <option value="<%= result.kode_reg_pasien%>"><%= result.status_pasien%></option>
+                            <option value="sudah periksa">sudah periksa</option>
+                            <option value="belum diperiksa">belum diperiksa</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-row m-auto pt-5">

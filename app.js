@@ -34,6 +34,7 @@ conn.connect((err) => {
 // LINK
 app.use('/', require('./routes/home.js'))
 app.use('/daftarPasien', require('./routes/daftarPasien.js'))
+app.use('/pemeriksaanPasien', require('./routes/pemeriksaanPasien.js'))
 app.use('/rekamMedis', require('./routes/rekamMedis.js'))
 app.use('/dataResep', require('./routes/dataResep.js'))
 app.use('/dataDiagnosa', require('./routes/dataDiagnosa.js'))

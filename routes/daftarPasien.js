@@ -15,7 +15,7 @@ conn.connect(err => {
 });
 
 router.get("/", (req, res) => {
-    let sql = "SELECT * FROM reg_pasien WHERE status_pasien = 'belum diperiksa' ";
+    let sql = "SELECT * FROM reg_pasien";
     let query = conn.query(sql, (err, result) => {
         if (err) 
             throw err;
@@ -101,11 +101,12 @@ router.put("/:id", async (req, res) => {
         const usia = req.body.usia;
         const tgl_daftar = req.body.tgl_daftar;
         const tempat_pemeriksaan = req.body.tempat_pemeriksaan;
+        const status_pasien = req.body.status_pasien
 
         let sql = (await "UPDATE reg_pasien SET nama_pasien = '") +
                 nama_pasien + "', alamat_pasien = '" + alamat_pasien + "', no_telp = '" +
                 no_telp + "', usia = '" + usia + "', tgl_daftar = '" + tgl_daftar + "', tempat_" +
-                "pemeriksaan = '" + tempat_pemeriksaan + "'  WHERE kode_reg_pasien = '" + req.params.id +
+                "pemeriksaan = '" + tempat_pemeriksaan + "', status_pasien = '"+ status_pasien +"'  WHERE kode_reg_pasien = '" + req.params.id +
                 "'";
         const query = conn.query(sql, (err, result) => {
             if (err) 
