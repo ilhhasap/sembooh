@@ -82,23 +82,4 @@ router.get('/', (req, res) => {
 })
 })
 
-router.put('/:id', async (req, res) => {
-    try {
-        const status_pasien = "sudah periksa"
-        const sql = await "UPDATE reg_pasien SET status_pasien = '" +
-                status_pasien + "' WHERE kode_reg_pasien = '" + req.params.id + "' "
-
-        const query = conn.query(sql, (err, result) => {
-            if (err) 
-                throw err;
-            console.log("status pasien diupdate")
-            res.redirect("/")
-            res.end()
-        })
-    } catch (error) {
-        console.log(error)
-    }
-
-})
-
 module.exports = router

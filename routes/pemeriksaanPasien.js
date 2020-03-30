@@ -16,7 +16,7 @@ conn.connect((err) => {
 
 // TAMPILAN HOME DOKTER
 router.get('/', (req, res) => {
-    const pasien = "SELECT * FROM reg_pasien WHERE status_pasien = 'belum diperiksa' ORDER BY kode_reg_pasien ASC LIMIT 1"
+    const pasien = "SELECT * FROM reg_pasien WHERE status_pasien = 'belum diperiksa' ORDER BY kode_reg_pasien ASC LIMIT 5"
     const pasienSudahPeriksa = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah periksa' ORDER BY kode_reg_pasien ASC LIMIT 1"
     const dokter = "SELECT * FROM dokter"
     const tindakan = "SELECT * FROM tindakan ORDER BY nama_tindakan"
@@ -48,6 +48,25 @@ router.get('/', (req, res) => {
             })
         })
     })
+})
+
+router.put('/:id', async (req, res) => {
+    try {
+        const status_pasien = "sudah periksa"
+        const sql = await "UPDATE reg_pasien SET status_pasien = '" +
+                status_pasien + "' WHERE kode_reg_pasien = '" + req.params.id + "' "
+
+        const query = conn.query(sql, (err, result) => {
+            if (err) 
+                throw err;
+            console.log("status pasien diupdate")
+            res.redirect("/pemeriksaanPasien")
+            res.end()
+        })
+    } catch (error) {
+        console.log(error)
+    }
+
 })
 
 // TAMBAH DOKTER

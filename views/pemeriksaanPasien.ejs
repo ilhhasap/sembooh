@@ -14,32 +14,44 @@
                       <!-- ! STEP 1 -->
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                         <div class="container">
-                            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                                    <strong>Antrian Terbaru !</strong>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
+                                <% if(pasien.length == 0) { %>
+                                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                                            <strong>Belum ada Antrian saat ini!!</strong>
+                                        </div>
+                                  <% } else if(pasien.length > 0) { %>
+                                            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                                            <strong>Periksa Pasien </strong> dan lanjut <strong>Beri Diagnosa !</strong> 
+                                        </div>
+                                    <% } %>
 
-                            <div class="row mt-2 mb-2">
-                                <div class="col">
-                                    <% pasien.forEach((pasien) => { %>
-                                        <div class="card text-center">
-                                                <div class="card-header font-weight-bold h4 bg-dark border-0 text-white">
-                                                  Antrian <%= pasien.kode_reg_pasien%></span>
-                                                </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title font-weight-bold"><%= pasien.nama_pasien%></h5>
-                                            <p class="card-text font-italic"><%= pasien.tempat_pemeriksaan%></p>
-                                            <a href="#" class="btn btn-primary float-right font-weight-bold">Periksa</a>
-                                            <form action="/dataDokter/<%= pasien.reg_pasien%>?_method=DELETE" method="post">
-                                                <button type="submit" class="btn btn-danger float-left font-weight-bold" >Batalkan</button>
-                                            </form>
+                                  <div class="row">
+                                      <div class="col col-8">
+
+                                  <ul class="list-group mb-4">
+                                      <% pasien.forEach((pasien) => { %>
+                                    <li class="list-group-item bg-light">
+                                        <div class="row">
+                                            <div class="col col-6">
+                                         <%= pasien.nama_pasien%> <span class="badge badge-danger"><%= pasien.kode_reg_pasien%></span>
                                         </div>
-                                        </div>
-                                              <% }) %>
+                                        <div class="col col-6">
+                                         <form action="/pemeriksaanPasien/<%= pasien.kode_reg_pasien %>?_method=PUT" method="post">
+                                        <button type="submit" class="btn btn-info btn-sm float-right badge-pill ml-3 font-weight-bold">PERIKSA</button>
+                                        </form>
+                                        <form
+                                        action="/daftarPasien/<%= pasien.kode_reg_pasien%>?_method=DELETE"
+                                        method="post">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm float-right badge-pill ml-4 font-weight-bold">BATAL</button>
+                                    </div>
+                                        </form>
+                                    </div>
+                                    </li>
+                                    <% }) %>
+                                  </ul>
+
                                 </div>
-                            </div>
+                                </div>
+
                         </div>
                     </div>
                   </div>
@@ -62,79 +74,47 @@
                       <div class="tab-content" id="nav-tabContent">
                           <!-- ! STEP 1 -->
                         <div class="tab-pane fade show active" id="step-diagnosa" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col col-md-6 mb-5 mt-3">
-                                            <form action="/dataDiagnosa" method="post">
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-6">
-                                                        <label for="inputPassword4">Tanggal Periksa</label>
-                                                        <input type="text" class="form-control" name="tgl_pemeriksaan" placeholder="contoh <%= moment().format('DD MMMM, YYYY') %>">
+                                <div class="container">
+                                    <% if(pasienSudahPeriksa.length == 0) { %>
+                                        <!-- ! Jika TIDAK ADA PASIEN PERIKSA -->
+                                        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                                                <strong>Periksa Pasien</strong> terlebih dahulu !!!
+                                              </div>
+                                              <% } else if(pasienSudahPeriksa.length > 0) { %>
+                                                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                                                        <strong>Beri Diagnosa</strong> sesuai Antrian!!
+                                                      </div>
+                                                      <% } %>
+            
+                                              <div class="row">
+                                                  <div class="col col-8">
+            
+                                              <ul class="list-group mb-4">
+                                                  <% pasienSudahPeriksa.forEach((pasien) => { %>
+                                                <li class="list-group-item bg-light">
+                                                    <div class="row">
+                                                        <div class="col col-6">
+                                                     <%= pasien.nama_pasien%> <span class="badge badge-danger"><%= pasien.kode_reg_pasien%></span>
                                                     </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label for="inputPassword4">Nama Pasien</label>
-                                                        <select class="form-control float-left" name="kode_reg_pasien">
-                                                            <option value="" selected>-- Pilih Pasien --</option>
-                                                            <% pasienSudahPeriksa.forEach((pasienSudahPeriksa) => { %>
-                                                                <option value="<%= pasienSudahPeriksa.kode_reg_pasien%>"><%= pasienSudahPeriksa.nama_pasien %></option>
-                                                                <% }) %>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="alamat">Hasil Pemeriksaan</label>
-                                                            <textarea class="form-control" id="alamat" rows="3" name="hasil_pemeriksaan"></textarea>
-                                                        </div>
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-12">
-                                                                <label for="inputPassword4">Nama Dokter</label>
-                                                                <select class="form-control float-left" name="kode_dokter">
-                                                                        <option value="" selected>-- Pilih Dokter --</option>
-                                                                    <% dokter.forEach((result) => { %>
-                                                                        <option value="<%= result.kode_dokter%>"><%= result.nama_dokter %> (<%= result.spesialis %>)</option>
-                                                                        <% }) %>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-row">
-                                                                        <div class="form-group col-md-6">
-                                                                                <label for="inputCity">Tindakan</label>
-                                                                                <select class="form-control float-left" name="kode_tindakan">
-                                                                                        <option value="" selected>-- Pilih Tindakan --</option>
-                                                                                    <% tindakan.forEach((result) => { %>
-                                                                                    <option value="<%= result.kode_tindakan%>"><%= result.nama_tindakan%></option>
-                                                                                    <% })  %>
-                                                                                </select>
-                                                                            </div>
-                                                                    <div class="form-group col-md-6">
-                                                                        <label for="nama">Status Pemeriksaan</label>
-                                                                        <select class="form-control float-left" name="status_pemeriksaan">
-                                                                                <option value="" selected>-- Pilih Status --</option>
-                                                                            <option value="Rawat Inap">Rawat Inap</option>
-                                                                            <option value="Rawat Jalan">Rawat Jalan</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                        <div class="form-row ">
-                                                                            <label for="inputCity">Ruang</label>
-                                                                            <select class="form-control float-left" name="kode_ruang">
-                                                                                    <option value="" selected>-- Pilih Ruang --</option>
-                                                                                <% ruangan.forEach((result) => { %>
-                                                                                <option value="<%= result.kode_ruang%>"><%= result.nama_ruang%> <span class="badge badge-pill badge-danger">(<%= result.kelas  %>)</span></option>
-                                                                                <% })  %>
-                                                                            </select>
-                                                                        </div>
-                                                                <div class="modal-footer">
-                                                                    <button
-                                                                        type="submit"
-                                                                        class="btn btn-primary btn-lg btn-block"
-                                                                        name="tambah"
-                                                                        onclick="alert('antrian berhasil ditambah');">Tambah</button>
-                                                                </div>
-                                                            </div>
-                                                        </form>
+                                                    <div class="col col-6">
+                                                     <form action="/pemeriksaanPasien/<%= pasien.kode_reg_pasien %>?_method=PUT" method="post">
+                                                    <button type="submit" class="btn btn-info btn-sm float-right badge-pill ml-3 font-weight-bold">BERI DIAGNOSA</button>
+                                                    </form>
+                                                    <form
+                                                    action="/daftarPasien/<%= pasien.kode_reg_pasien%>?_method=DELETE"
+                                                    method="post">
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm float-right badge-pill ml-4 font-weight-bold">BATAL</button>
+                                                </div>
+                                                    </form>
+                                                </div>
+                                                </li>
+                                                <% }) %>
+                                              </ul>
+            
+                                            </div>
+                                            </div>
+            
                                     </div>
-                                </div>
                             </div>
                         </div>
                         <!-- ! AKHIR STEP 1 -->
