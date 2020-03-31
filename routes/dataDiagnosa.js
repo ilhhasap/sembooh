@@ -80,7 +80,7 @@ router.delete("/:id", (req, res) => {
             res.json({message: error.message});
         } else {
             console.log("deleted " + result.affectedRows + " rows");
-            res.redirect("/daftarPasien");
+            res.redirect("/dataDiagnosas");
         }
     });
 });

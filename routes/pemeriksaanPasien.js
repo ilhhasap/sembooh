@@ -70,31 +70,34 @@ router.put('/:id', async (req, res) => {
 })
 
 // TAMBAH DOKTER
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
     try {
-        const kode_dokter = ''
-        const nama_dokter = req.body.nama_dokter
-        const jeniskel = req.body.jeniskel
-        const alamat_dokter = req.body.alamat_dokter
-        const no_telp = req.body.no_telp
-        const spesialis = req.body.spesialis
-        const jam_praktek = req.body.jam_praktek
-        const no_praktek = req.body.no_praktek
+        const tgl_pemeriksaan = req.body.tgl_pemeriksaan;
+        const hasil_pemeriksaan = req.body.hasil_pemeriksaan;
+        const kode_dokter = req.body.kode_dokter;
+        const kode_pasien = req.body.kode_reg_pasien;
+        const kode_tindakan = req.body.kode_tindakan;
+        const status_pemeriksaan = req.body.status_pemeriksaan;
+        const kode_ruang = req.body.kode_ruang;
 
-        let sql = await "INSERT INTO dokter VALUES ('','" + nama_dokter + "','" +
-                jeniskel + "','" + alamat_dokter + "','" + no_telp + "','" + spesialis +
-                "', '" + jam_praktek + "', '" + no_praktek + "')";
+        let sql = (await "INSERT INTO diagnosa VALUES ('','" + tgl_pemeriksaan + "','" +
+                hasil_pemeriksaan + "','" + kode_dokter + "','" + kode_pasien + "','" + kode_tindakan +
+                "','" + status_pemeriksaan + "', '" + kode_ruang + "')")
+        const hapusAntrianPasien = `DELETE FROM reg_pasien WHERE reg_pasien.kode_reg_pasien = ${kode_pasien}`;
+
         const query = conn.query(sql, (err, result) => {
+        conn.query(hapusAntrianPasien, (err, hapusAntrianPasien) => {
             if (err) 
                 throw err;
-            console.log("1 record inserted");
-            res.redirect('/dataDokter');
+            console.log('berhasil insert rows');
+            res.redirect("/pemeriksaanPasien");
             res.end();
-        });
+        })
+    })
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-})
+});
 
 // DELETE DATA
 router.delete('/:id', (req, res) => {
