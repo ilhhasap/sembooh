@@ -96,7 +96,7 @@
                                             <!-- ! Jika TIDAK ADA PASIEN PERIKSA -->
                                             <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
                                                 <strong>Langkah 1 Dulu!</strong>
-                                                Periksa pasien
+                                                Lakukan Periksa pasien
                                             </div>
                                             <% } else if(pasienSudahPeriksa.length > 0) { %>
                                                 <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
@@ -122,12 +122,6 @@
                                                                             class="btn btn-info btn-sm float-right badge-pill ml-3 font-weight-bold"
                                                                             data-toggle="modal"
                                                                             data-target="#diagnosa<%= pasien.kode_reg_pasien%>">BERI DIAGNOSA</button>
-                                                                        <!-- <form
-                                                                            action="/daftarPasien/<%= pasien.kode_reg_pasien%>?_method=DELETE"
-                                                                            method="post">
-                                                                            <button
-                                                                                type="submit"
-                                                                                class="btn btn-outline-danger btn-sm float-right badge-pill ml-4 font-weight-bold">BATAL</button> -->
                                                                         </div>
                                                                     </form>
                                                                 </div>

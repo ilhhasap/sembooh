@@ -39,7 +39,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fa fa-stethoscope"></i>
                 </div>
-                <div class="sidebar-brand-text mx-1">RUMAH IPUL</div>
+                <div class="sidebar-brand-text mx-1">BIARSEMBOOH</div>
             </a>
 
             <!-- Divider -->
@@ -179,6 +179,30 @@
             </li>
             <% } %>
             <!-- ? akhir akses perawat -->
+
+            
+            <% if(session == "dokter") { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                <span>Dashboard</span>
+                <i class="fas fa-fw fa-tachometer-alt float-right"></i>
+            </a>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Data
+        </div>
+        <!--! Rekam Medis-->
+        <li class="nav-item ">
+            <a class="nav-link" href="/dataObat">
+                <span>Data Obat</span>
+                <i class="fas fa-database float-right"></i>
+            </a>
+        </li>
+        <% } %>
+        <!-- ? akhir akses dokter -->
 
 
             <!-- Divider -->
