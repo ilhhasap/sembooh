@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mysql = require('mysql')
 const path = require('path')
+const session = require('express-session')
 const moment = require('moment')
 const conn = mysql.createConnection(
     {host: 'localhost', user: 'root', password: '', database: 'hospital'}
@@ -14,10 +15,16 @@ conn.connect((err) => {
     console.log('Mysql Connected...');
 });
 
+router.use(session({
+    secret: 'sosecret',
+    resave: false,
+    saveUninitialized: false
+}))
+
 // TAMPILAN HOME DOKTER
 router.get('/', (req, res) => {
     const pasien = "SELECT * FROM reg_pasien WHERE status_pasien = 'belum diperiksa' ORDER BY kode_reg_pasien ASC LIMIT 5"
-    const pasienSudahPeriksa = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah periksa' ORDER BY kode_reg_pasien ASC LIMIT 1"
+    const pasienSudahPeriksa = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah periksa' ORDER BY kode_reg_pasien ASC LIMIT 5"
     const dokter = "SELECT * FROM dokter"
     const tindakan = "SELECT * FROM tindakan ORDER BY nama_tindakan"
     const ruangan = "SELECT * FROM ruangan"
@@ -79,25 +86,53 @@ router.post("/", async (req, res) => {
         const kode_tindakan = req.body.kode_tindakan;
         const status_pemeriksaan = req.body.status_pemeriksaan;
         const kode_ruang = req.body.kode_ruang;
-
+        const status_pasien = "sudah didiagnosa"
+        const update = await "UPDATE reg_pasien SET status_pasien = '" +
+            status_pasien + "' WHERE kode_reg_pasien = '" + kode_pasien + "' "
         let sql = (await "INSERT INTO diagnosa VALUES ('','" + tgl_pemeriksaan + "','" +
                 hasil_pemeriksaan + "','" + kode_dokter + "','" + kode_pasien + "','" + kode_tindakan +
                 "','" + status_pemeriksaan + "', '" + kode_ruang + "')")
-        const hapusAntrianPasien = `DELETE FROM reg_pasien WHERE reg_pasien.kode_reg_pasien = ${kode_pasien}`;
-
+        
         const query = conn.query(sql, (err, result) => {
-        conn.query(hapusAntrianPasien, (err, hapusAntrianPasien) => {
             if (err) 
                 throw err;
-            console.log('berhasil insert rows');
-            res.redirect("/pemeriksaanPasien");
-            res.end();
+            console.log('berhasil didiagnosa');
+                const query = conn.query(update, (err, update) => {
+                    if (err) 
+                        throw err;
+                    console.log("status pasien sudah didiagnosa")
+                    res.redirect("/pemeriksaanPasien")
+                    res.end();
+                })
+            // res.redirect('/pemeriksaanPasien')
+            // res.redirect(307, '/updateStatusPasien/' + kode_pasien + '?_method=PUT')
+            
         })
-    })
     } catch (error) {
         console.log(error);
     }
 });
+
+
+// SUdah DIDIAGNOSA
+router.put('/updateStatusPasien/:id', async (req, res) => {
+    try {
+        const status_pasien = "sudah didiagnosa"
+        const sql = await "UPDATE reg_pasien SET status_pasien = '" +
+            status_pasien + "' WHERE kode_reg_pasien = '" + req.params.id + "' "
+
+        const query = conn.query(sql, (err, result) => {
+            if (err) 
+                throw err;
+            console.log("status pasien sudah didiagnosa")
+            res.redirect("/pemeriksaanPasien")
+            res.end()
+        })
+    } catch (error) {
+        console.log(error)
+    }
+
+})
 
 // DELETE DATA
 router.delete('/:id', (req, res) => {

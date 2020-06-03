@@ -95,8 +95,8 @@
                                         <% if(pasienSudahPeriksa.length == 0) { %>
                                             <!-- ! Jika TIDAK ADA PASIEN PERIKSA -->
                                             <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                                                <strong>Periksa Pasien</strong>
-                                                terlebih dahulu !!!
+                                                <strong>Langkah 1 Dulu!</strong>
+                                                Periksa pasien
                                             </div>
                                             <% } else if(pasienSudahPeriksa.length > 0) { %>
                                                 <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
@@ -132,8 +132,9 @@
                                                                     </form>
                                                                 </div>
                                                             </li>
-
+                                                            
                                                             <!-- ! MODAL DIANGOSA -->
+                                                            <% pasienSudahPeriksa.forEach((pasien) => { %>
                                                             <div
                                                                 class="modal fade bd-example-modal-xl"
                                                                 id="diagnosa<%= pasien.kode_reg_pasien%>"
@@ -149,8 +150,8 @@
                                                                                 <span aria-hidden="true">&times;</span>
                                                                             </button>
                                                                         </div>
+                                                                        <form action="/pemeriksaanPasien" method="post">
                                                                         <div class="modal-body">
-                                                                            <form action="/pemeriksaanPasien" method="post">
                                                                                 <input type="hidden" name="kode_reg_pasien" value="<%= pasien.kode_reg_pasien%>">
                                                                                     <div class="form-row">
                                                                                       <div class="col-md-4 mb-3">
@@ -200,10 +201,12 @@
                                                                                       </div>
                                                                                     </div>
                                                                             <button class="btn btn-primary btn-lg btn-block font-weight-bold" type="submit">Kirim</button>
+                                                                                    </div>
                                                                                                         </form>
-                                                                                                    </div>
                                                                                                 </div>
                                                                                             </div>
+                                                                                            </div>
+                                                                                            <% }) %>
                                                                                             <% }) %>
                                                                                             </ul>
 

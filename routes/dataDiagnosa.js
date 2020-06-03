@@ -73,14 +73,14 @@ router.post("/", async (req, res) => {
 // DELETE PASIEN
 router.delete("/:id", (req, res) => {
     const id = req.params.id;
-    const sql = `DELETE FROM reg_pasien WHERE kode_reg_pasien = ${id}`;
+    const sql = `DELETE FROM diagnosa WHERE kode_diagnosa = ${id}`;
 
     conn.query(sql, [id], (error, result, field) => {
         if (error) {
             res.json({message: error.message});
         } else {
             console.log("deleted " + result.affectedRows + " rows");
-            res.redirect("/dataDiagnosas");
+            res.redirect("/dataDiagnosa");
         }
     });
 });
