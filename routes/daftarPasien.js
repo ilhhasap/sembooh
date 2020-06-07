@@ -19,15 +19,15 @@ router.get("/", (req, res) => {
     let query = conn.query(sql, (err, result) => {
         if (err) 
             throw err;
-        if ( !req.session.loggedin && !req.session.username ) {
+        if ( !req.session.loggedin && !req.session.username) {
                 res.redirect('/login') 
-        } else if(req.session.username == "admin") {
+        } else if(req.session.admin == "admin") {
         res.render("daftarPasien", {
             title: "Halaman Home",
-            result, moment,session:req.session.username,
+            result, moment,session:req.session.admin,
             panjang: result.length
         }) 
-    } else if(req.session.username == "perawat") {
+    } else if(req.session.perawat == "perawat") {
         res.sendFile(path.join(__dirname, '../views', 'hakAkses.html'))
     }
     });

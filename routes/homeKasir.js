@@ -1,9 +1,9 @@
 const express = require('express')
+const path = require('path');
 const router = express.Router()
 const session = require('express-session')
 const mysql = require('mysql')
 const moment = require('moment')
-const path = require('path');
 const conn = mysql.createConnection(
     {host: 'localhost', user: 'root', password: '', database: 'hospital'}
 );
@@ -30,9 +30,10 @@ router.get('/', (req, res) => {
     const obat = "SELECT * FROM obat"
     const perawatRuangan = "SELECT kode_perawat, nama_perawat, ruangan.kode_ruang, ruangan.nama_ruang FROM perawat JOIN ruangan ON perawat.kode_ruang = ruangan.kode_ruang"
     const pasien = "SELECT * FROM reg_pasien WHERE status_pasien = 'belum diperiksa'"
-    const pasienSudahPeriksa = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah periksa' ORDER BY kode_reg_pasien ASC LIMIT 5"
+    const pasienSudahPeriksa = "SELECT * FROM reg_pasien WHERE status_pasien LIKE '%sudah%' ORDER BY kode_reg_pasien ASC LIMIT 5"
     const pasienSudahResep = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah diresep' ORDER BY kode_reg_pasien ASC LIMIT 5"
     const pasienSudahDiagnosa = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah didiagnosa' ORDER BY kode_reg_pasien ASC LIMIT 5"
+    const pasienSudahDirekam = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah direkam' ORDER BY kode_reg_pasien ASC LIMIT 5"
 
     let query = conn.query(pasien, (err, pasien) => {
         conn.query(rekamMedis, (err, rekamMedis) => {
@@ -40,35 +41,26 @@ router.get('/', (req, res) => {
         conn.query(diagnosa, (err, diagnosa) => {
         conn.query(dokter, (err, dokter) => {
         conn.query(perawat, (err, perawat) => {
+        conn.query(rekamMedis, (err, rekamMedis) => {
         conn.query(pasienSudahPeriksa, (err, pasienSudahPeriksa) => {
-        conn.query(tindakan, (err, tindakan) => {
-        conn.query(obat, (err, obat) => {
-        conn.query(perawatRuangan, (err, perawatRuangan) => {
-        conn.query(pasienSudahResep, (err, pasienSudahResep) => {
-        conn.query(pasienSudahDiagnosa, (err, pasienSudahDiagnosa) => {
+        conn.query(pasienSudahDirekam, (err, pasienSudahDirekam) => {
         conn.query(join, (err, join) => {
         if (err) 
             throw err;
         if ( !req.session.loggedin && !req.session.username ) {
             res.redirect('/login')
-        } else if(req.session.admin == "admin"){
-            res.render('home', {
-                title: "Home Admin",
-                jumlahPasien:pasien.length,
-                jumlahRuangan:ruangan.length,
-                jumlahRekam:rekamMedis.length,
-                jumlahDiagnosa:diagnosa.length,
-                jumlahTindakan:tindakan.length,
-                jumlahDokter:dokter.length,
-                jumlahPerawat:perawat.length,
-                jumlahObat:perawat.length,
+        } else if(req.session.kasir == "kasir"){
+            res.render('homeKasir', {
+                title: "Home Kasir",
+                perawat,pasien,pasienSudahPeriksa,
+                pasienSudahResep,moment,diagnosa,
+                obat,join,pasienSudahDirekam,
                 jumlahPasienSudahPeriksa:pasienSudahPeriksa.length,
-                session: req.session.admin,
-                antrian: pasien.length, pasien
+                jumlahPasien:pasien.length,
+                perawatRuangan,dokter,tindakan,
+                session: req.session.kasir,ruangan,
+                antrian: pasien.length
             })
-        } 
-        else if(req.session.perawat == "perawat" || req.session.dokter == "dokter"){
-            res.sendFile(path.join(__dirname, '../views', 'hakAkses.html'))
         }
     })
     })
@@ -81,9 +73,6 @@ router.get('/', (req, res) => {
     })
     })
     })
-    })
-})
-})
 
 
 
@@ -134,77 +123,6 @@ router.put('/:id', async (req, res) => {
     }
 
 })
-
-
-router.post("/pasienSudahDiagnosa", async (req, res) => {
-    try {
-        const tgl_pemeriksaan = req.body.tgl_pemeriksaan;
-        const hasil_pemeriksaan = req.body.hasil_pemeriksaan;
-        const kode_dokter = req.body.kode_dokter;
-        const kode_pasien = req.body.kode_reg_pasien;
-        const kode_tindakan = req.body.kode_tindakan;
-        const status_pemeriksaan = req.body.status_pemeriksaan;
-        const kode_ruang = req.body.kode_ruang;
-        const status_pasien = "sudah didiagnosa"
-        const update = await "UPDATE reg_pasien SET status_pasien = '" +
-            status_pasien + "' WHERE kode_reg_pasien = '" + kode_pasien + "' "
-        let sql = (await "INSERT INTO diagnosa VALUES ('','" + tgl_pemeriksaan + "','" +
-                hasil_pemeriksaan + "','" + kode_dokter + "','" + kode_pasien + "','" + kode_tindakan +
-                "','" + status_pemeriksaan + "', '" + kode_ruang + "')")
-        
-        const query = conn.query(sql, (err, result) => {
-            if (err) 
-                throw err;
-            console.log('berhasil didiagnosa');
-                const query = conn.query(update, (err, update) => {
-                    if (err) 
-                        throw err;
-                    console.log("status pasien sudah didiagnosa")
-                    res.redirect("/")
-                    res.end();
-                })
-            
-        })
-    } catch (error) {
-        console.log(error);
-    }
-});
-
-
-
-router.post("/pasienSudahResep", async (req, res) => {
-    try {
-        const tgl_resep = req.body.tgl_resep;
-        const kode_reg_pasien = req.body.kode_reg_pasien;
-        const kode_dokter = req.body.kode_dokter;
-        const kode_obat = req.body.kode_obat;
-        const aturan_pakai = req.body.aturan_pakai;
-        const harga_obat = req.body.harga_obat;
-        const kode_pasien = req.body.kode_reg_pasien;
-        const status_pasien = "sudah diresep"
-        const update = await "UPDATE reg_pasien SET status_pasien = '" +
-            status_pasien + "' WHERE kode_reg_pasien = '" + kode_pasien + "' "
-        let sql = (await "INSERT INTO resep VALUES ('','" + tgl_resep + "','" +
-            kode_reg_pasien + "','" + kode_dokter + "','" + kode_obat + "','" + aturan_pakai +
-            "','" + harga_obat + "')")
-        
-        const query = conn.query(sql, (err, result) => {
-            if (err) 
-                throw err;
-            console.log('berhasil diresep');
-                const query = conn.query(update, (err, update) => {
-                    if (err) 
-                        throw err;
-                    console.log("status pasien sudah diresep")
-                    res.redirect("/")
-                    res.end();
-                })
-            
-        })
-    } catch (error) {
-        console.log(error);
-    }
-});
 
 
 

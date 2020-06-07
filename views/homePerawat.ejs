@@ -27,6 +27,28 @@
 
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div
+                                class="text-s font-weight-bold text-light text-uppercase mb-1 float-left mt-1"><img src="img/icon/pasienDiperiksa.png" alt="" width="40px"></div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2">Sudah
+                                        <span style="color: #22d7ff;">Periksa</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto h2 text-dark font-weight-bold mt-2">
+                            <%= jumlahPasienSudahPeriksa%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card shadow h-100 py-2">
                 <a href="/rekamMedis">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -138,7 +160,7 @@ aria-hidden="true">
         </div>
         <div class="modal-body">
 
-            <form action="/home/daftarPasien" method="post">
+            <form action="/tambahPasien" method="post">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputPassword4">NIK</label>
@@ -216,7 +238,7 @@ aria-hidden="true">
                                                             </div>
                                                             <div class="col col-6">
                                                                 <form
-                                                                    action="/<%= pasien.kode_reg_pasien %>?_method=PUT"
+                                                                    action="/homePerawat/<%= pasien.kode_reg_pasien %>?_method=PUT"
                                                                     method="post">
                                                                     <button
                                                                         type="submit"
@@ -269,11 +291,11 @@ aria-hidden="true">
                                             <% if(pasienSudahResep.length == 0) { %>
                                                 <!-- ! Jika TIDAK ADA PASIEN PERIKSA -->
                                                 <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                                                    <strong>Tunggu Resep dari Dokter dulu</strong> <a href="/">refresh</a>
+                                                    <strong>Tunggu Resep dari Dokter dulu</strong> <a href="/homePerawat">refresh</a>
                                                 </div>
                                                 <% } else if(pasienSudahResep.length > 0) { %>
                                                     <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                                                        <strong>Buat Rekam medis</strong> <a href="/">refresh</a>
+                                                        <strong>Buat Rekam medis</strong> <a href="/homePerawat">refresh</a>
                                                     </div>
                                                 <% } %>
     
@@ -314,7 +336,7 @@ aria-hidden="true">
                                                                                 <h5 class="modal-title" id="exampleModalLabel"><%= pasien.nama_pasien%> <span>(<%= pasien.tempat_pemeriksaan%>)</span></h5>
                                                                             </div>
                                                                             <div class="modal-body">
-                                                                                <form action="/pasienSudahRekam" method="post">
+                                                                                <form action="/homePerawat/pasienSudahRekam" method="post">
                                                                                     <div class="form-row">
                                                                                             <input type="hidden" name="kode_reg_pasien" value="<%= pasien.kode_reg_pasien%>">
                                                                                                 <div class="form-group col-md">

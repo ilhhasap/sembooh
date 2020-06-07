@@ -59,7 +59,7 @@
                                     class="text-s font-weight-bold text-light text-uppercase mb-1 float-left mt-1"><img src="img/icon/ruangan.png" alt="" width="40px"></div>
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
-                                        <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2">Data
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2">Daftar
                                             <span style="color: #efc84a;">Obat</span></div>
                                     </div>
                                 </div>
@@ -189,7 +189,7 @@
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <form action="/pasienSudahDiagnosa" method="post">
+                                                                    <form action="/homeDokter/pasienSudahDiagnosa" method="post">
                                                                     <div class="modal-body">
                                                                             <input type="hidden" name="kode_reg_pasien" value="<%= pasien.kode_reg_pasien%>">
                                                                                 <div class="form-row">
@@ -269,7 +269,7 @@
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 text-center">
                                     <div class="h5 mb-0 mr-3 font-weight-bold text-dark ml-2 mt-2">Langkah 2 |
-                                        <span style="color: #81f700;">Rekam Medis Pasien</span>
+                                        <span style="color: #1576c5;">Pemberian Resep Pasien</span>
                                     </div>
                                 </div>
                                 <div class="tab-content" id="nav-tabContent">
@@ -283,13 +283,13 @@
                                             <% if(pasienSudahDiagnosa.length == 0) { %>
                                                 <!-- ! Jika TIDAK ADA PASIEN PERIKSA -->
                                                 <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                                                    <strong>Tunggu Resep dari Dokter dulu</strong>
-                                                    <a href="/">refresh</a>
+                                                    <strong>Beri Diagnosa dulu</strong>
+                                                    <a href="/homeDokter">refresh</a>
                                                 </div>
                                                 <% } else if(pasienSudahDiagnosa.length > 0) { %>
                                                     <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                                                        <strong>Buat Rekam medis</strong>
-                                                        <a href="/">refresh</a>
+                                                        <strong>Buat Resep Pasien</strong>
+                                                        <a href="/homeDokter">refresh</a>
                                                     </div>
                                                 <% } %>
 
@@ -332,7 +332,7 @@
                                                                                 </h5>
                                                                             </div>
                                                                             <div class="modal-body">
-                                                                                <form action="/pasienSudahResep" method="post">
+                                                                                <form action="/homeDokter/pasienSudahResep" method="post">
                                                                                     <div class="form-row">
                                                                                             <input type="hidden" name="kode_reg_pasien" value="<%= pasien.kode_reg_pasien%>">
                                                                                                 <div class="form-group col-md">

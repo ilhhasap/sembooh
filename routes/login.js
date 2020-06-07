@@ -1,4 +1,5 @@
 const mysql = require('mysql')
+const path = require('path');
 const express = require('express')
 const session = require('express-session')
 const bodyParser = require('body-parser')
@@ -43,9 +44,23 @@ router.post('/auth', (req, res) => {
         conn.query("SELECT * FROM admin WHERE username = ? AND password = ?",[username,password],  (err, results, fields) => {
             if (results.length > 0) {
                 req.session.loggedin = true
-                req.session.username = username
-                console.log(req.session.username + ' telah login ' +  moment().format('LLLL') )
+                if(username == "admin") {
+                    req.session.admin = "admin"
+                    console.log(req.session.admin + ' telah login ' +  moment().format('LLLL') )
                 res.redirect('/')
+            } else if(username == "perawat") {
+                req.session.perawat = "perawat"
+                console.log(req.session.perawat + ' telah login ' +  moment().format('LLLL') )
+                res.redirect('/homePerawat')
+            } else if(username == "dokter") {
+                req.session.dokter = "dokter"
+                console.log(req.session.dokter + ' telah login ' +  moment().format('LLLL') )
+                res.redirect('/homeDokter')
+            } else if(username == "kasir") {
+                req.session.kasir = "kasir"
+                console.log(req.session.kasir + ' telah login ' +  moment().format('LLLL') )
+                res.redirect('/homeKasir')
+            } 
             } else {
                 res.send('username dan password salah! <br> <a class="btn btn-primary" href="/login" role="button">kembali login</a> ')
             }
@@ -72,11 +87,29 @@ router.get('/home', (req, res) => {
     res.end()
 })
 
+
 router.get('/logout', (req, res) => {
-req.session.destroy((err) => {
-    console.log('petugas telah logout ' + moment().format('LLLL') + '\n')
-    res.redirect('/login')
-})
+    if(req.session.username == "admin"){
+        req.session.destroy((admin) => {
+            console.log('Admin telah logout ' + moment().format('LLLL') + '\n')
+            res.redirect('/login')
+        })
+    } else if(req.session.dokter == "dokter"){
+        req.session.destroy((dokter) => {
+            console.log('Dokter telah logout ' + moment().format('LLLL') + '\n')
+            res.redirect('/login')
+        })
+    } else if(req.session.username == "perawat"){
+        req.session.destroy((perawat) => {
+            console.log('Perawat telah logout ' + moment().format('LLLL') + '\n')
+            res.redirect('/login')
+        })
+    } else if(req.session.username == "kasir"){
+        req.session.destroy((kasir) => {
+            console.log('Kasir telah logout ' + moment().format('LLLL') + '\n')
+            res.redirect('/login')
+        })
+    }
 })
 
 

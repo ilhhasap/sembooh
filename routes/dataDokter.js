@@ -24,13 +24,13 @@ router.get('/', (req, res) => {
             throw err;
         if ( !req.session.loggedin && !req.session.username ) {
             res.redirect('/login') 
-        } else if(req.session.username == "admin") {
+        } else if(req.session.admin == "admin") {
         res.render('dataDokter', {
             title: "Data Dokter",
-            results,session:req.session.username,
+            results,session:req.session.admin,
             panjang: results.length
         })
-    }else if(req.session.username == "perawat") {
+    }else if(req.session.perawat == "perawat" || req.session.dokter == "dokter") {
         res.sendFile(path.join(__dirname, '../views', 'hakAkses.html'))
     }
     })

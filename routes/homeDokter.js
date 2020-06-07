@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
+const path = require('path');
 const session = require('express-session')
 const mysql = require('mysql')
 const moment = require('moment')
-const path = require('path');
 const conn = mysql.createConnection(
     {host: 'localhost', user: 'root', password: '', database: 'hospital'}
 );
@@ -51,9 +51,11 @@ router.get('/', (req, res) => {
             throw err;
         if ( !req.session.loggedin && !req.session.username ) {
             res.redirect('/login')
-        } else if(req.session.admin == "admin"){
-            res.render('home', {
-                title: "Home Admin",
+        } else if(req.session.dokter == "dokter"){
+            res.render('homeDokter', {
+                title: "Home Dokter",
+                perawat,pasien,pasienSudahPeriksa,
+                pasienSudahResep,moment,pasienSudahDiagnosa,
                 jumlahPasien:pasien.length,
                 jumlahRuangan:ruangan.length,
                 jumlahRekam:rekamMedis.length,
@@ -62,12 +64,11 @@ router.get('/', (req, res) => {
                 jumlahDokter:dokter.length,
                 jumlahPerawat:perawat.length,
                 jumlahObat:perawat.length,
-                jumlahPasienSudahPeriksa:pasienSudahPeriksa.length,
-                session: req.session.admin,
-                antrian: pasien.length, pasien
+                dokter,tindakan,obat,join,
+                session: req.session.dokter,ruangan,
+                rekamMedis: rekamMedis.length
             })
-        } 
-        else if(req.session.perawat == "perawat" || req.session.dokter == "dokter"){
+        } else if(req.session.perawat == "perawat" || req.session.admin == "admin"){
             res.sendFile(path.join(__dirname, '../views', 'hakAkses.html'))
         }
     })
@@ -115,25 +116,6 @@ router.post("/tambahPasien", async (req, res) => {
     }
 });
 
-
-router.put('/:id', async (req, res) => {
-    try {
-        const status_pasien = "sudah periksa"
-        const sql = await "UPDATE reg_pasien SET status_pasien = '" +
-                status_pasien + "' WHERE kode_reg_pasien = '" + req.params.id + "' "
-
-        const query = conn.query(sql, (err, result) => {
-            if (err) 
-                throw err;
-            console.log("status pasien diupdate")
-            res.redirect("/")
-            res.end()
-        })
-    } catch (error) {
-        console.log(error)
-    }
-
-})
 
 
 router.post("/pasienSudahDiagnosa", async (req, res) => {
@@ -196,41 +178,6 @@ router.post("/pasienSudahResep", async (req, res) => {
                     if (err) 
                         throw err;
                     console.log("status pasien sudah diresep")
-                    res.redirect("/")
-                    res.end();
-                })
-            
-        })
-    } catch (error) {
-        console.log(error);
-    }
-});
-
-
-
-router.post("/pasienSudahRekam", async (req, res) => {
-    try {
-        const kode_pasien = req.body.kode_reg_pasien
-        const kode_reg_pasien = req.body.kode_reg_pasien
-        const kode_dokter = req.body.kode_dokter
-        const kode_diagnosa = req.body.kode_diagnosa
-        const kode_obat = req.body.kode_obat
-        const tgl_rekam_medis = req.body.tgl_rekam_medis
-        const status_pasien = "sudah direkam"
-        const update = await "UPDATE reg_pasien SET status_pasien = '" +
-            status_pasien + "' WHERE kode_reg_pasien = '" + kode_pasien + "' "
-        const sql = await "INSERT INTO rekam_medis VALUES ('','" + tgl_rekam_medis + "','" +
-            kode_reg_pasien + "','" + kode_dokter + "','" + kode_obat + "','" + kode_diagnosa +
-            "')";
-        
-        const query = conn.query(sql, (err, result) => {
-            if (err) 
-                throw err;
-            console.log('berhasil direkam medis');
-                const query = conn.query(update, (err, update) => {
-                    if (err) 
-                        throw err;
-                    console.log("status pasien sudah direkam medis")
                     res.redirect("/")
                     res.end();
                 })
