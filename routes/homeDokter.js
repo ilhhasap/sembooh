@@ -108,7 +108,7 @@ router.post("/tambahPasien", async (req, res) => {
             if (err) 
                 throw err;
             console.log("1 record inserted");
-            res.redirect("/");
+            res.redirect("/homeDokter");
             res.end();
         });
     } catch (error) {
@@ -142,7 +142,7 @@ router.post("/pasienSudahDiagnosa", async (req, res) => {
                     if (err) 
                         throw err;
                     console.log("status pasien sudah didiagnosa")
-                    res.redirect("/")
+                    res.redirect("/homeDokter")
                     res.end();
                 })
             
@@ -178,7 +178,7 @@ router.post("/pasienSudahResep", async (req, res) => {
                     if (err) 
                         throw err;
                     console.log("status pasien sudah diresep")
-                    res.redirect("/")
+                    res.redirect("/homeDokter")
                     res.end();
                 })
             
@@ -198,7 +198,7 @@ router.delete('/:id', (req, res) => {
             res.json({message: error.message})
         } else {
             console.log('deleted ' + result.affectedRows + ' rows');
-            res.redirect('/');
+            res.redirect('/homeDokter');
         }
     });
 });

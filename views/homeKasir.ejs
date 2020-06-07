@@ -83,7 +83,7 @@
                                     <div class="col col-8">
 
                                         <ul class="list-group mb-4">
-                                            <% pasienSudahPeriksa.forEach((pasien) => { %>
+                                            <% pasienSudahDirekam.forEach((pasien) => { %>
                                                 <li class="list-group-item bg-light">
                                                     <div class="row">
                                                         <div class="col col-6">
@@ -98,11 +98,11 @@
                                                                     type="button"
                                                                     class="btn btn-info btn-sm float-right badge-pill ml-3 font-weight-bold"
                                                                     data-toggle="modal"
-                                                                    data-target="#diagnosa<%= pasien.kode_reg_pasien%>">BERI DIAGNOSA</button>
+                                                                    data-target="#diagnosa<%= pasien.kode_reg_pasien%>">BERI TAGIHAN</button>
                                                             </form>
                                                         </div>
                                                     </li>
-                                                    <% pasienSudahDirekam.forEach((pasien) => { %>
+                                                    <% join.forEach((pasien) => { %>
                                                         <div
                                                             class="modal fade bd-example-modal-xl"
                                                             id="diagnosa<%= pasien.kode_reg_pasien%>"
@@ -114,70 +114,68 @@
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h5 class="modal-title" id="exampleModalLabel">
-                                                                            <span class="font-weight-bold"><%= pasien.nama_pasien%></span>(<%= pasien.tempat_pemeriksaan%>)</h5>
+                                                                            <span class="font-weight-bold"><%= pasien.nama_pasien%></span>(<%= pasien.tempat_pemeriksaan%>) <%= pasien.status_pemeriksaan%></h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <form action="/homeDokter/pasienSudahDiagnosa" method="post">
+                                                                    <form action="/homeKasir/pasienDitagih" method="post">
                                                                         <div class="modal-body">
                                                                             <input
                                                                                 type="hidden"
                                                                                 name="kode_reg_pasien"
                                                                                 value="<%= pasien.kode_reg_pasien%>">
-                                                                            <div class="form-row">
+                                                                            <input
+                                                                                type="hidden"
+                                                                                name="tarif_kamar"
+                                                                                value="<%= pasien.tarif_kamar%>">
+                                                                            <input
+                                                                                type="hidden"
+                                                                                name="biaya_administrasi">
+                                                                            <input type="hidden" 
+                                                                            name="harga_obat" value="<%= pasien.harga_obat %>">
+                                                                            <div class="form-row align-items-center">
                                                                                 <div class="col-md-4 mb-3">
-                                                                                    <label for="inputPassword4">Tanggal Periksa</label>
+                                                                                    <label for="inputPassword4">Tanggal Bayar</label>
                                                                                     <input
                                                                                         type="text"
                                                                                         class="form-control"
-                                                                                        name="tgl_pemeriksaan"
+                                                                                        name="tgl_administrasi"
                                                                                         placeholder="contoh <%= moment().format('DD MMMM, YYYY') %>">
                                                                                 </div>
                                                                                 <div class="col-md-4 mb-3">
-                                                                                    <label for="inputPassword4">Nama Dokter</label>
-                                                                                    <select class="form-control float-left" name="kode_dokter">
-                                                                                        <option value="" selected="selected">-- Pilih Dokter --</option>
-                                                                                        <% dokter.forEach((result) => { %>
-                                                                                            <option value="<%= result.kode_dokter%>"><%= result.nama_dokter %>
-                                                                                                (<%= result.spesialis %>)</option>
-                                                                                            <% }) %>
+                                                                                    <label for="inputPassword4">Diagnosa</label>
+                                                                                    <select class="form-control float-left" name="kode_diagnosa" disabled>
+                                                                                            <option value="<%= pasien.kode_diagnosa%>" selected>(<%= pasien.tgl_pemeriksaan %>)
+                                                                                                (<%= pasien.nama_pasien %>)
+                                                                                            </option>
                                                                                             </select>
                                                                                         </div>
-                                                                                        <div class="col-md-4 mb-3">
-                                                                                            <label for="inputCity">Tindakan</label>
-                                                                                            <select class="form-control float-left" name="kode_tindakan">
-                                                                                                <option value="" selected="selected">-- Pilih Tindakan --</option>
-                                                                                                <% tindakan.forEach((result) => { %>
-                                                                                                    <option value="<%= result.kode_tindakan%>"><%= result.nama_tindakan%></option>
-                                                                                                    <% })  %>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="form-row">
+                                                                                <div class="col-md-4 mb-3">
+                                                                                    <label for="inputPassword4">Resep</label>
+                                                                                    <select class="form-control float-left" name="kode_resep" disabled>
+                                                                                            <% resep.forEach((resep) => { %>
+                                                                                            <option value="<%= resep.kode_resep%>" selected>(<%= resep.tgl_resep %>)
+                                                                                                (<%= resep.nama_pasien %>)</option>
+                                                                                                <% }) %>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                <div class="col-md-4 mb-3">
+                                                                                    <label for="inputPassword4">Obat</label>
+                                                                                    <select class="form-control float-left" name="kode_obat" disabled>
+                                                                                            <option value="<%= pasien.kode_obat%>" selected>(<%= pasien.nama_obat %>)
+                                                                                                (<%= pasien.nama_pasien %>)</option>
+                                                                                            </select>
+                                                                                        </div>
                                                                                                 <div class="col-md-4 mb-3">
-                                                                                                    <label for="alamat">Hasil Pemeriksaan</label>
-                                                                                                    <textarea class="form-control" id="alamat" rows="3" name="hasil_pemeriksaan"></textarea>
+                                                                                                    <label for="nama">Lama Menginap</label>
+                                                                                                    <input type="text" class="form-control" name="lama_menginap" placeholder="contoh : (1,2) hanya angka">
                                                                                                 </div>
-                                                                                                <div class="col-md-4 mb-3">
-                                                                                                    <label for="nama">Status Pemeriksaan</label>
-                                                                                                    <select class="form-control float-left" name="status_pemeriksaan">
-                                                                                                        <option value="" selected="selected">-- Pilih Status --</option>
-                                                                                                        <option value="Rawat Inap">Rawat Inap</option>
-                                                                                                        <option value="Rawat Jalan">Rawat Jalan</option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                                <div class="col-md-4 mb-3">
-                                                                                                    <label for="inputCity">Ruang</label>
-                                                                                                    <select class="form-control float-left" name="kode_ruang">
-                                                                                                        <option value="" selected="selected">-- Pilih Ruang --</option>
-                                                                                                        <% ruangan.forEach((result) => { %>
-                                                                                                            <option value="<%= result.kode_ruang%>"><%= result.nama_ruang%>
-                                                                                                                <span class="badge badge-pill badge-danger">(<%= result.kelas %>)</span></option>
-                                                                                                            <% })  %>
-                                                                                                            </select>
+                                                                                                <div class="col-auto my-1 mt-3">
+                                                                                                        <div class="custom-control custom-checkbox mr-sm-2">
+                                                                                                        <label class="" for="customControlAutosizing"><h5><span class="badge badge-pill badge-danger">+ Biaya Pendaftaran Rp 15.000</span></h5></label>
                                                                                                         </div>
-                                                                                                    </div>
+                                                                                                      </div>
                                                                                                     <button class="btn btn-primary btn-lg btn-block font-weight-bold" type="submit">Kirim</button>
                                                                                                 </div>
                                                                                             </form>

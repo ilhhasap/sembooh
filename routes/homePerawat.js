@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
     const obat = "SELECT * FROM obat"
     const perawatRuangan = "SELECT kode_perawat, nama_perawat, ruangan.kode_ruang, ruangan.nama_ruang FROM perawat JOIN ruangan ON perawat.kode_ruang = ruangan.kode_ruang"
     const pasien = "SELECT * FROM reg_pasien WHERE status_pasien = 'belum diperiksa'"
-    const pasienSudahPeriksa = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah periksa' ORDER BY kode_reg_pasien ASC LIMIT 5"
+    const pasienSudahPeriksa = "SELECT * FROM reg_pasien WHERE status_pasien LIKE '%sudah%' ORDER BY kode_reg_pasien ASC LIMIT 5"
     const pasienSudahResep = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah diresep' ORDER BY kode_reg_pasien ASC LIMIT 5"
     const pasienSudahDiagnosa = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah didiagnosa' ORDER BY kode_reg_pasien ASC LIMIT 5"
 
@@ -106,7 +106,7 @@ router.post("/tambahPasien", async (req, res) => {
             if (err) 
                 throw err;
             console.log("1 record inserted");
-            res.redirect("/");
+            res.redirect("/homePerawat");
             res.end();
         });
     } catch (error) {
@@ -125,7 +125,7 @@ router.put('/:id', async (req, res) => {
             if (err) 
                 throw err;
             console.log("status pasien diupdate")
-            res.redirect("/")
+            res.redirect("/homePerawat")
             res.end()
         })
     } catch (error) {
@@ -159,7 +159,7 @@ router.post("/pasienSudahRekam", async (req, res) => {
                     if (err) 
                         throw err;
                     console.log("status pasien sudah direkam medis")
-                    res.redirect("/")
+                    res.redirect("/homePerawat")
                     res.end();
                 })
             
@@ -179,7 +179,7 @@ router.delete('/:id', (req, res) => {
             res.json({message: error.message})
         } else {
             console.log('deleted ' + result.affectedRows + ' rows');
-            res.redirect('/');
+            res.redirect('/homePerawat');
         }
     });
 });
