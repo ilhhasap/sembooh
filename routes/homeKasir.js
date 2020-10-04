@@ -22,7 +22,7 @@ conn.connect((err) => {
 router.get('/', (req, res) => {
     const rekamMedis = "SELECT * FROM rekam_medis"
     const ruangan = "SELECT * FROM ruangan"
-    const diagnosa = "SELECT * FROM diagnosa JOIN reg_pasien ON diagnosa.kode_reg_pasien = reg_pasien.kode_reg_pasien JOIN ruangan ON diagnosa.kode_ruang = ruangan.kode_ruang ORDER BY kode_diagnosa DESC LIMIT 5"
+    const diagnosa = "SELECT * FROM diagnosa JOIN reg_pasien ON diagnosa.kode_reg_pasien = reg_pasien.kode_reg_pasien JOIN ruangan ON diagnosa.kode_ruang = ruangan.kode_ruang JOIN obat ON diagnosa.kode_obat = obat.kode_obat ORDER BY kode_diagnosa DESC LIMIT 5"
     const dokter = "SELECT * FROM dokter"
     const perawat = "SELECT * FROM perawat"
     const tindakan = "SELECT * FROM tindakan"
@@ -34,6 +34,7 @@ router.get('/', (req, res) => {
     const pasienSudahResep = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah diresep' ORDER BY kode_reg_pasien ASC LIMIT 5"
     const pasienSudahDiagnosa = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah didiagnosa' ORDER BY kode_reg_pasien ASC LIMIT 5"
     const pasienSudahDirekam = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah direkam' ORDER BY kode_reg_pasien ASC LIMIT 5"
+    const pasienDitagih = "SELECT * FROM reg_pasien WHERE status_pasien = 'sudah ditagih' ORDER BY kode_reg_pasien ASC LIMIT 5"
     const join = "SELECT * FROM rekam_medis JOI" +
     "N reg_pasien ON rekam_medis.kode_reg_pasien = reg_pasien.kode_reg_pasien JOIN " +
     "dokter ON rekam_medis.kode_dokter = dokter.kode_dokter JOIN obat ON rekam_medi" +
@@ -47,8 +48,10 @@ router.get('/', (req, res) => {
         conn.query(perawat, (err, perawat) => {
         conn.query(rekamMedis, (err, rekamMedis) => {
         conn.query(resep, (err, resep) => {
+        conn.query(obat, (err, obat) => {
         conn.query(pasienSudahPeriksa, (err, pasienSudahPeriksa) => {
         conn.query(pasienSudahDirekam, (err, pasienSudahDirekam) => {
+        conn.query(pasienDitagih, (err, pasienDitagih) => {
         conn.query(join, (err, join) => {
         if (err) 
             throw err;
@@ -56,15 +59,16 @@ router.get('/', (req, res) => {
             res.redirect('/login')
         } else if(req.session.kasir == "kasir"){
             res.render('homeKasir', {
-                title: "Home Kasir",
+                title: "Home Kasir",pasienDitagih,
                 perawat,pasien,pasienSudahPeriksa,
                 pasienSudahResep,moment,diagnosa,
                 obat,join,pasienSudahDirekam,
+                jumlahPasienDitagih:pasienDitagih.length,
                 jumlahPasienSudahPeriksa:pasienSudahPeriksa.length,
                 jumlahPasien:pasien.length,
                 perawatRuangan,dokter,tindakan,
                 session: req.session.kasir,ruangan,
-                antrian: pasien.length,resep
+                antrian: pasien.length,resep,obat
             })
         }
     })
@@ -78,7 +82,27 @@ router.get('/', (req, res) => {
     })
     })
     })
+    })
+    })
 
+    router.put('/:id', async (req, res) => {
+        try {
+            const status_pasien = "sudah ditagih"
+            const sql = await "UPDATE reg_pasien SET status_pasien = '" +
+                    status_pasien + "' WHERE kode_reg_pasien = '" + req.params.id + "' "
+    
+            const query = conn.query(sql, (err, result) => {
+                if (err) 
+                    throw err;
+                console.log("status pasien ditagih")
+                res.redirect("/homePerawat")
+                res.end()
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    
+    })
 
 
 router.post("/tambahPasien", async (req, res) => {
@@ -132,7 +156,7 @@ router.post("/pasienDitagih", async (req, res) => {
             kode_reg_pasien + "','" + kode_diagnosa + "','" + kode_resep + "','" + kode_obat +
             "', '"+ lama_menginap +"', '"+ biaya_administrasi +"', '"+ ppn10 +"', '"+ total_bayar +"')";
         
-        const query = conn.query(sql, (err, result) => {
+        const query = conn.query(sql, (err, sql) => {
             if (err) 
                 throw err;
                 console.log('berhasil ditagih');

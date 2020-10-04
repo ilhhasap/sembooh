@@ -89,27 +89,10 @@ router.get('/home', (req, res) => {
 
 
 router.get('/logout', (req, res) => {
-    if(req.session.username == "admin"){
-        req.session.destroy((admin) => {
+        req.session.destroy((err) => {
             console.log('Admin telah logout ' + moment().format('LLLL') + '\n')
             res.redirect('/login')
         })
-    } else if(req.session.dokter == "dokter"){
-        req.session.destroy((dokter) => {
-            console.log('Dokter telah logout ' + moment().format('LLLL') + '\n')
-            res.redirect('/login')
-        })
-    } else if(req.session.username == "perawat"){
-        req.session.destroy((perawat) => {
-            console.log('Perawat telah logout ' + moment().format('LLLL') + '\n')
-            res.redirect('/login')
-        })
-    } else if(req.session.username == "kasir"){
-        req.session.destroy((kasir) => {
-            console.log('Kasir telah logout ' + moment().format('LLLL') + '\n')
-            res.redirect('/login')
-        })
-    }
 })
 
 
